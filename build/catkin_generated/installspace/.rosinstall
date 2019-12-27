@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/chatree/catkin_ws/install/setup.sh
+    local-name: /home/chatree/ROS-Robotics/install/setup.sh

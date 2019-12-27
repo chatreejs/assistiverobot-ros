@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /home/chatree/catkin_ws/src
-# Build directory: /home/chatree/catkin_ws/build
+# Source directory: /home/chatree/ROS-Robotics/src
+# Build directory: /home/chatree/ROS-Robotics/build
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

@@ -1,6 +1,6 @@
 set(_CATKIN_CURRENT_PACKAGE "beginner_tutorials")
 set(beginner_tutorials_VERSION "0.0.0")
-set(beginner_tutorials_MAINTAINER "Chanon Treemeth <chanon.sloth@g.swu.ac.th>")
+set(beginner_tutorials_MAINTAINER "chatree <chatree@todo.todo>")
 set(beginner_tutorials_PACKAGE_FORMAT "2")
 set(beginner_tutorials_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
 set(beginner_tutorials_BUILD_EXPORT_DEPENDS "roscpp" "rospy" "std_msgs")
