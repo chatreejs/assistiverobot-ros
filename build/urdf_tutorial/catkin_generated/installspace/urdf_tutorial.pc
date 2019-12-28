@@ -1,0 +1,8 @@
+prefix=/home/chatree/ROS-Robotics/install
+
+Name: urdf_tutorial
+Description: Description of urdf_tutorial
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/chatree/ROS-Robotics/install/lib 
+Requires: 

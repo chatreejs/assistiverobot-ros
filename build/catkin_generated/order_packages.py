@@ -2,4 +2,4 @@
 source_root_dir = "/home/chatree/ROS-Robotics/src"
 whitelisted_packages = "".split(';') if "" != "" else []
 blacklisted_packages = "".split(';') if "" != "" else []
-underlay_workspaces = "/home/chatree/ROS-Robotics/devel;/opt/ros/melodic".split(';') if "/home/chatree/ROS-Robotics/devel;/opt/ros/melodic" != "" else []
+underlay_workspaces = "/opt/ros/melodic".split(';') if "/opt/ros/melodic" != "" else []

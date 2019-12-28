@@ -132,6 +132,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/chatree/ROS-Robotics/build/gtest/cmake_install.cmake")
   include("/home/chatree/ROS-Robotics/build/beginner_tutorials/cmake_install.cmake")
+  include("/home/chatree/ROS-Robotics/build/my_urdf/cmake_install.cmake")
 
 endif()
 

@@ -18,10 +18,13 @@ set(CMAKE_MAKEFILE_DEPENDS
   "catkin/catkin_generated/version/package.cmake"
   "catkin_generated/installspace/_setup_util.py"
   "catkin_generated/order_packages.cmake"
+  "my_urdf/catkin_generated/package.cmake"
   "/home/chatree/ROS-Robotics/devel/share/beginner_tutorials/cmake/beginner_tutorials-msg-paths.cmake"
   "/home/chatree/ROS-Robotics/src/CMakeLists.txt"
   "/home/chatree/ROS-Robotics/src/beginner_tutorials/CMakeLists.txt"
   "/home/chatree/ROS-Robotics/src/beginner_tutorials/package.xml"
+  "/home/chatree/ROS-Robotics/src/my_urdf/CMakeLists.txt"
+  "/home/chatree/ROS-Robotics/src/my_urdf/package.xml"
   "/opt/ros/melodic/share/catkin/cmake/../package.xml"
   "/opt/ros/melodic/share/catkin/cmake/all.cmake"
   "/opt/ros/melodic/share/catkin/cmake/assert.cmake"
@@ -205,6 +208,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "gtest/googlemock/CMakeFiles/CMakeDirectoryInformation.cmake"
   "gtest/googlemock/gtest/CMakeFiles/CMakeDirectoryInformation.cmake"
   "beginner_tutorials/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "my_urdf/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -246,4 +250,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "beginner_tutorials/CMakeFiles/beginner_tutorials_gennodejs.dir/DependInfo.cmake"
   "beginner_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir/DependInfo.cmake"
   "beginner_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/DependInfo.cmake"
+  "my_urdf/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake"
   )

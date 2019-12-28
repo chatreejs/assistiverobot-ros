@@ -70,3 +70,11 @@
 /home/chatree/ROS-Robotics/build/beginner_tutorials/CMakeFiles/beginner_tutorials_gennodejs.dir
 /home/chatree/ROS-Robotics/build/beginner_tutorials/CMakeFiles/roscpp_generate_messages_nodejs.dir
 /home/chatree/ROS-Robotics/build/beginner_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir
+/home/chatree/ROS-Robotics/build/my_urdf/CMakeFiles/install/strip.dir
+/home/chatree/ROS-Robotics/build/my_urdf/CMakeFiles/install/local.dir
+/home/chatree/ROS-Robotics/build/my_urdf/CMakeFiles/test.dir
+/home/chatree/ROS-Robotics/build/my_urdf/CMakeFiles/list_install_components.dir
+/home/chatree/ROS-Robotics/build/my_urdf/CMakeFiles/edit_cache.dir
+/home/chatree/ROS-Robotics/build/my_urdf/CMakeFiles/_catkin_empty_exported_target.dir
+/home/chatree/ROS-Robotics/build/my_urdf/CMakeFiles/rebuild_cache.dir
+/home/chatree/ROS-Robotics/build/my_urdf/CMakeFiles/install.dir
