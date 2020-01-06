@@ -1,4 +1,5 @@
 # ROS-Robotics
+[![Build Status](https://travis-ci.com/Chanonsersa/ROS-Robotics.svg?branch=master)](https://travis-ci.com/Chanonsersa/ROS-Robotics)
 
 This is the code repository for ROS Robotics , published by Chanon Treemeth and Jirawat Promsee.
 
@@ -28,3 +29,4 @@ You can running simulation using gazebo, rviz
 
 # Troubleshooting
 
+ 
