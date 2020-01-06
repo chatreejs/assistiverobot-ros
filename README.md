@@ -20,5 +20,11 @@ Setup environment of your current shell.
 
 `$ source devel/setup.bash`
 
+# Simulation
+
+You can running simulation using gazebo, rviz
+
+`$ roslaunch my_urdf_sim diffdrive.launch`
+
 # Troubleshooting
 
