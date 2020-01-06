@@ -1,17 +1,20 @@
 <?xml version="1.0"?>
 <launch>
 
-    <param name="robot_description" command="$(find xacro)/xacro.py '$(find m2wr_description)/urdf/m2wr.xacro'" />
+    <arg name="model" default="$(find m2wr_description)/urdf/m2wr.xacro"/>
+    <arg name="gui" default="true"/>
+    <arg name="rvizconfig" default="$(find m2wr_description)/rviz/m2wr.rviz"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+    <param name="use_gui" value="$(arg gui)"/>
 
     <!-- send fake joint values -->
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-        <param name="use_gui" value="False"/>
-    </node>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 
     <!-- Combine joint values -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 
     <!-- Show in Rviz   -->
-    <node name="rviz" pkg="rviz" type="rviz" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
 
 </launch>
