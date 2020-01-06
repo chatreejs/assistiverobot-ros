@@ -17,11 +17,11 @@ def clbk_laser(msg):
         of 720 readings and converts it into 5 readings 
     """
     regions = {
-        "right": min(min(msg.ranges[0:143]), 10),
-        "fright": min(min(msg.ranges[144:287]), 10),
-        "front": min(min(msg.ranges[288:431]), 10),
-        "fleft": min(min(msg.ranges[432:575]), 10),
-        "left": min(min(msg.ranges[576:719]), 10),
+        "right": min(min(msg.ranges[500:699]), 10),
+        "fright": min(min(msg.ranges[700:899]), 10),
+        "front": min(min(msg.ranges[900:1099]), 10),
+        "fleft": min(min(msg.ranges[1100:1299]), 10),
+        "left": min(min(msg.ranges[1300:1499]), 10),
     }
 
     take_action(regions)
@@ -44,32 +44,32 @@ def take_action(regions):
 
     if regions["front"] > 1 and regions["fleft"] > 1 and regions["fright"] > 1:
         state_description = "case 1 - nothing"
-        linear_x = 0.6
+        linear_x = 0.4
         angular_z = 0
     elif regions["front"] < 1 and regions["fleft"] > 1 and regions["fright"] > 1:
         state_description = "case 2 - front"
         linear_x = 0
-        angular_z = 0.3
+        angular_z = -0.5
     elif regions["front"] > 1 and regions["fleft"] > 1 and regions["fright"] < 1:
         state_description = "case 3 - fright"
         linear_x = 0
-        angular_z = 0.3
+        angular_z = -0.5
     elif regions["front"] > 1 and regions["fleft"] < 1 and regions["fright"] > 1:
         state_description = "case 4 - fleft"
         linear_x = 0
-        angular_z = -0.3
+        angular_z = 0.5
     elif regions["front"] < 1 and regions["fleft"] > 1 and regions["fright"] < 1:
         state_description = "case 5 - front and fright"
         linear_x = 0
-        angular_z = 0.3
+        angular_z = -0.5
     elif regions["front"] < 1 and regions["fleft"] < 1 and regions["fright"] > 1:
         state_description = "case 6 - front and fleft"
         linear_x = 0
-        angular_z = -0.3
+        angular_z = 0.5
     elif regions["front"] < 1 and regions["fleft"] < 1 and regions["fright"] < 1:
         state_description = "case 7 - front and fleft and fright"
         linear_x = 0
-        angular_z = 0.3
+        angular_z = -0.5
     elif regions["front"] > 1 and regions["fleft"] < 1 and regions["fright"] < 1:
         state_description = "case 8 - fleft and fright"
         linear_x = 0.3

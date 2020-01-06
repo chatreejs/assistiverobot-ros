@@ -30,12 +30,12 @@
     <gazebo reference="sensor_laser">
         <sensor type="ray" name="head_hokuyo_sensor">
             <pose>0 0 0 0 0 0</pose>
-            <visualize>true</visualize>
-            <update_rate>10</update_rate>
+            <visualize>false</visualize>
+            <update_rate>5</update_rate>
             <ray>
                 <scan>
                     <horizontal>
-                        <samples>8000</samples>
+                        <samples>2000</samples>
                         <resolution>1</resolution>
                         <min_angle>-3.141592</min_angle>
                         <max_angle>3.141592</max_angle>
