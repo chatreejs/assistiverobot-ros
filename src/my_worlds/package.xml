@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>my_worlds</name>
+  <version>0.0.0</version>
+  <description>The my_worlds package</description>
+
+  <author email="chanon.sloth@g.swu.ac.th">Chanon Treemeth</author>
+
+  <maintainer email="chanon.sloth@g.swu.ac.th">Chanon Treemeth</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>gazebo_ros</exec_depend>
+</package>
