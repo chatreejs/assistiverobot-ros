@@ -22,7 +22,7 @@ Setup environment of your current shell.
 
 # Simulation
 
-## 1. Simulation two wheel robot with laser scan sensor
+## Simulation two wheel robot with laser scan sensor
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world**.
 
@@ -32,15 +32,11 @@ To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell**
 
 `$ roslaunch m2wr_description rviz.launch`
 
-## 2. Running Obstacle Avoidance Algorithm
+## Running Obstacle Avoidance Algorithm
 
 Launch the `gazebo simulation` and **spawn** the robot in an **18 floor world**.
 
 `$ roslaunch m2wr_description 18_floor.launch`
-
-To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
-
-`$ roslaunch m2wr_description rviz.launch`
 
 To start `obstacle avoidance algorithm` run the **obstacle_avoidance.py** in a new **Shell**
 
