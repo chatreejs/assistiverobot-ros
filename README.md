@@ -2,27 +2,42 @@
 
 This is the code repository for ROS Robotics , published by Chanon Treemeth and Jirawat Promsee.
 
-# Usage
+## Prerequisites
 
-Clone this repository.
+* [ROS](http://wiki.ros.org/)
+* [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
 
-`$ git clone https://github.com/Chanonsersa/ROS-Robotics.git`
+If you don't have catkin workspace, Let's create and build a catkin workspace:
 
-Go into project directory.
+```
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/
+$ catkin_make
+```
 
-`$ cd ROS-Robotics/`
+## Usage
+
+Firstly, clone this repository to your catkin workspace.
+
+```
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/Chanonsersa/ROS-Robotics.git
+```
 
 Build package using `catkin_make`.
 
-`$ catkin_make`
+```
+$ cd ~/catkin_ws/
+$ catkin_make
+```
 
 Setup environment of your current shell.
 
 `$ source devel/setup.bash`
 
-# Simulation
+## Simulation
 
-## Simulation two wheel robot with laser scan sensor
+### Simulation two wheel robot with laser scan sensor
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world**.
 
@@ -32,7 +47,7 @@ To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell**
 
 `$ roslaunch m2wr_description rviz.launch`
 
-## Running Obstacle Avoidance Algorithm
+### Running Obstacle Avoidance Algorithm
 
 Launch the `gazebo simulation` and **spawn** the robot in an **18 floor world**.
 
