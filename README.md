@@ -57,5 +57,11 @@ To start `obstacle avoidance algorithm` run the **obstacle_avoidance.py** in a n
 
 `$ rosrun motion_plan obstacle_avoidance.py`
 
-# Troubleshooting
+## Troubleshooting
+### [gazebo-2] process has died , exit code 255
+The most probable cause is that you have the gzclient or gzserver opened. Try with 
+```
+$ killall gzserver
+$ kilall gzclient
+```
 
