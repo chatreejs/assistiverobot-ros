@@ -1,5 +1,5 @@
 # ROS-Robotics
-[![Build Status](https://travis-ci.com/Chanonsersa/ROS-Robotics.svg?branch=master)](https://travis-ci.com/Chanonsersa/ROS-Robotics)
+[![Build Status](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation.svg?branch=master)](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation)
 
 This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinrobot.com/about2/) to make a slam and navigation , published by Chanon Treemeth and Jirawat Promsee.
 
