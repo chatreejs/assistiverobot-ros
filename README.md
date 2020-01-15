@@ -36,9 +36,15 @@ Setup environment of your current shell.
 
 `$ source devel/setup.bash`
 
+## Real-world robot using kobuki
+
+Only support at ROS Kinetic
+
 ## Simulation
 
-### Simulation two wheel robot
+### 1. Simulation two wheel robot
+
+#### Spawn robot to world
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
 
@@ -50,21 +56,26 @@ To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell**
 
 `$ roslaunch m2wr_description rviz.launch`
 
-### Running Obstacle Avoidance Algorithm
+#### Running Obstacle Avoidance Algorithm
 
 To start `obstacle avoidance algorithm` run the **obstacle_avoidance.py** in a new **Shell**
 
 `$ rosrun motion_plan obstacle_avoidance.py`
 
-### Running Open SLAM GMapping
+#### Running Open SLAM GMapping
 
 To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
 
 `$ roslaunch motion_plan gmapping.launch`
 
+### 2. Simulation Kobuki
+
+Only support at ROS Kinetic
+
 ## Troubleshooting
 ### [gazebo-2] process has died , error exit code 255
-The most probable cause is that you have the gzclient or gzserver opened. Try with 
+The most probable cause is that you have the gzclient or gzserver opened. Try with
+
 ```
 $ killall gzserver
 $ kilall gzclient
@@ -72,6 +83,7 @@ $ kilall gzclient
 
 ### CMake Error could not find a package configuration file provided by "openslam_gmapping"
 If you see error like
+
 ```
 CMake Error at /opt/ros/melodic/share/catkin/cmake/catkinConfig.cmake:83 (find_package):
   Could not find a package configuration file provided by "openslam_gmapping"
