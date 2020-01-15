@@ -1,12 +1,13 @@
 # ROS-Robotics
 [![Build Status](https://travis-ci.com/Chanonsersa/ROS-Robotics.svg?branch=master)](https://travis-ci.com/Chanonsersa/ROS-Robotics)
 
-This is the code repository for ROS Robotics , published by Chanon Treemeth and Jirawat Promsee.
+This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinrobot.com/about2/) to make a slam and navigation , published by Chanon Treemeth and Jirawat Promsee.
 
 ## Prerequisites
 
-* [ROS](http://wiki.ros.org/)
+* [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 * [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
+* [Kobuki Package](http://wiki.ros.org/kobuki/Tutorials/Installation)
 
 If you don't have catkin workspace, Let's create and build a catkin workspace:
 
@@ -100,3 +101,14 @@ CMake Error at /opt/ros/melodic/share/catkin/cmake/catkinConfig.cmake:83 (find_p
 It seems like openslam_gmapping is missing. Try
 
 `sudo apt-get install ros-<DISTRO>-openslam-gmapping`
+
+
+## Contributors
+
+<a href="https://github.com/Chanonsersa"><img src="https://avatars0.githubusercontent.com/u/36321701?s=460&v=4" title="Chanonsersa" width="80" height="80"></a>
+
+<a href="https://github.com/tarrelateto1"><img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="80" height="80"></a>
+
+## License
+
+MIT ©
