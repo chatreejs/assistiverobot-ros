@@ -48,26 +48,23 @@ Only support at ROS Kinetic
 #### Spawn robot to world
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
-
-`$ roslaunch m2wr_description spawn.launch world:=<WORLD_NAME>`
-
-if `<WORLD_NAME>` not exists in `/my_worlds/world/` it will become an `empty_world` automatically.
-
+  * `$ roslaunch m2wr_description spawn.launch world:=<WORLD_NAME>`
+  * if `<WORLD_NAME>` not exists in `/my_worlds/world/` it will become an `empty_world` automatically.
+  
 To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
-
-`$ roslaunch m2wr_description rviz.launch`
+  * `$ roslaunch m2wr_description rviz.launch`
 
 #### Running Obstacle Avoidance Algorithm
 
 To start `obstacle avoidance algorithm` run the **obstacle_avoidance.py** in a new **Shell**
 
-`$ rosrun motion_plan obstacle_avoidance.py`
+* `$ rosrun motion_plan obstacle_avoidance.py`
 
 #### Running Open SLAM GMapping
 
 To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
 
-`$ roslaunch motion_plan gmapping.launch`
+* `$ roslaunch motion_plan gmapping.launch`
 
 ### 2. Simulation Kobuki
 
