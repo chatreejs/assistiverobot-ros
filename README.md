@@ -35,7 +35,7 @@ $ catkin_make
 
 Setup environment of your current shell.
 
-`$ source devel/setup.bash`
+```$ source devel/setup.bash```
 
 ## Real-world robot using kobuki
 
@@ -48,23 +48,23 @@ Only support at ROS Kinetic
 #### Spawn robot to world
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
-  * `$ roslaunch m2wr_description spawn.launch world:=<WORLD_NAME>`
+  * ```$ roslaunch m2wr_description spawn.launch world:=<WORLD_NAME>```
   * if `<WORLD_NAME>` not exists in `/my_worlds/world/` it will become an `empty_world` automatically.
   
 To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
-  * `$ roslaunch m2wr_description rviz.launch`
+  * ```$ roslaunch m2wr_description rviz.launch```
 
 #### Running Obstacle Avoidance Algorithm
 
 To start `obstacle avoidance algorithm` run the **obstacle_avoidance.py** in a new **Shell**
 
-* `$ rosrun motion_plan obstacle_avoidance.py`
+* ```$ rosrun motion_plan obstacle_avoidance.py```
 
 #### Running Open SLAM GMapping
 
 To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
 
-* `$ roslaunch motion_plan gmapping.launch`
+* ```$ roslaunch motion_plan gmapping.launch```
 
 ### 2. Simulation Kobuki
 
@@ -97,8 +97,23 @@ CMake Error at /opt/ros/melodic/share/catkin/cmake/catkinConfig.cmake:83 (find_p
 ```
 It seems like openslam_gmapping is missing. Try
 
-`sudo apt-get install ros-<DISTRO>-openslam-gmapping`
+```sudo apt-get install ros-<DISTRO>-openslam-gmapping```
 
+### ERROR: cannot launch node of type [gmapping/slam_gmapping]
+If you see error like
+
+```
+ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
+ROS path [0]=/opt/ros/kinetic/share/ros
+ROS path [1]=/home/peng/turtlebot3_ws/src
+ROS path [2]=/home/peng/catkin_ws/src
+ROS path [3]=/home/peng/study_ws/src
+ROS path [4]=/opt/ros/kinetic/share
+```
+
+It seems like gmapping is missing. Try
+
+```sudo apt-get install ros-<DISTRO>-gmapping```
 
 ## Contributors
 
