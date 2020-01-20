@@ -41,43 +41,60 @@ Setup environment of your current shell.
 
 Only support at ROS Kinetic
 
-## Simulation
+### 1. Install Kobuki
 
-### 1. Simulation two wheel robot
+```
+$ sudo apt-get install ros-kinetic-kobuki ros-kinetic-kobuki-core
+```
 
-#### Spawn robot to world
+### 2. Dialout Group
+If not already in the dialout group: 
+```
+$ sudo usermod -a -G dialout $USER
+```
+and then log out, log back in again. 
 
-Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
-  * `$ roslaunch m2wr_description spawn.launch world:=<WORLD_NAME>`
-  * if `<WORLD_NAME>` not exists in `/my_worlds/world/` it will become an `empty_world` automatically.
-  
-To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
-  * `$ roslaunch m2wr_description rviz.launch`
+### 3. Set Udev Rule
+```
+$ rosrun kobuki_ftdi create_udev_rules
+```
+Reinsert the Kobuki's USB cable into your laptop/pc/... You should now find it show up at /dev/kobuki. 
 
-#### Running Obstacle Avoidance Algorithm
+### 4. Keyboard Teleoperation
+```
+# In a first shell
+$ . /opt/ros/kinetic/setup.bash
+$ roslaunch kobuki_node minimal.launch --screen
+# In a second shell
+$ . /opt/ros/kinetic/setup.bash
+$ roslaunch kobuki_keyop keyop.launch --screen
+```
 
-To start `obstacle avoidance algorithm` run the **obstacle_avoidance.py** in a new **Shell**
-
-* `$ rosrun motion_plan obstacle_avoidance.py`
-
-#### Running Open SLAM GMapping
-
-To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
-
-* `$ roslaunch motion_plan gmapping.launch`
-
-### 2. Simulation Toktak (Kobuki base)
+## Simulation Toktak (Kobuki base)
 
 Only support at ROS Kinetic
 
-#### Spawn robot to world
-
+### Spawn robot to world
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
-  * `$ roslaunch toktak_description spawn.launch world:=<WORLD_NAME>`
-  * if `<WORLD_NAME>` not exists in `/my_worlds/world/` it will become an `empty_world` automatically.
-  
+* `$ roslaunch toktak_description spawn.launch world:=<WORLD_NAME>`
+* if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
+
+### Vizualization robot
+
 To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
-  * `$ roslaunch toktak_description view_model.launch`
+* `$ roslaunch toktak_description view_model.launch`
+
+### Running Obstacle Avoidance Algorithm
+
+To start `obstacle avoidance algorithm` run the **ObstacleAvoidance.py** in a new **Shell**
+
+* `$ rosrun toktak_motion_plan ObstacleAvoidance.py`
+
+### Running Open SLAM GMapping
+
+To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
+
+* `$ roslaunch toktak_motion_plan gmapping.launch`
 
 ## Troubleshooting
 ### [gazebo-2] process has died , error exit code 255
