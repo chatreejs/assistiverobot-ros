@@ -7,7 +7,7 @@
     <arg name="headless" default="false"/>
     <arg name="debug" default="false"/>
     <arg name="model" default="$(find toktak_description)/urdf/kobuki_standalone.urdf.xacro"/>
-    <arg name="world" default="world01"/>
+    <arg name="world" default="18_floor"/>
 
     <arg name="x" default="0"/>
     <arg name="y" default="0"/>
