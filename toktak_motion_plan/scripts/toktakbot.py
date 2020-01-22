@@ -12,7 +12,7 @@ import math
 import time
 
 
-class ToktakTest():
+class Toktakbot():
     ######## CHANGE THE FOLLOWING VALUES #########
     # x coordinate for pose approx 1 meter from docking station
     NEAR_DOCKING_STATION_X = -1.88
@@ -182,7 +182,7 @@ class ToktakTest():
 if __name__ == '__main__':
     delivery_checks = 0
     try:
-        toktakbot = ToktakTest()
+        toktakbot = Toktakbot()
         while (toktakbot.walking() and not rospy.is_shutdown()):
             delivery_checks = delivery_checks + 1
     except rospy.ROSInterruptException:
