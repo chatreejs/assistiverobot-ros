@@ -105,6 +105,22 @@ $ killall gzserver
 $ kilall gzclient
 ```
 
+### ERROR: cannot launch node of type [gmapping/slam_gmapping]
+If you see error like
+
+```
+ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
+ROS path [0]=/opt/ros/kinetic/share/ros
+ROS path [1]=/home/peng/turtlebot3_ws/src
+ROS path [2]=/home/peng/catkin_ws/src
+ROS path [3]=/home/peng/study_ws/src
+ROS path [4]=/opt/ros/kinetic/share
+```
+
+It seems like gmapping is missing. Try
+
+```sudo apt-get install ros-<DISTRO>-gmapping```
+
 ### CMake Error could not find a package configuration file provided by "openslam_gmapping"
 If you see error like
 
@@ -123,8 +139,25 @@ CMake Error at /opt/ros/melodic/share/catkin/cmake/catkinConfig.cmake:83 (find_p
 ```
 It seems like openslam_gmapping is missing. Try
 
-`sudo apt-get install ros-<DISTRO>-openslam-gmapping`
+```
+$ sudo apt-get install ros-<DISTRO>-openslam-gmapping
+```
 
+### ERROR: cannot launch node of type [map_server/map_server]: map_server, [amcl/amcl]: amcl, [move_base/move_base]: move_base
+
+It seems like navigation package is missing. Try
+
+```
+$ sudo apt-get install ros-<DISTRO>-navigation-tutorials 
+```
+
+### Failed to create the dwa_local_planner/DWAPlannerROS planner
+
+It seems like dwa-local-planner is missing. Try
+
+```
+$ sudo apt-get install ros-<DISTRO>-dwa-local-planner
+```
 
 ## Contributors
 
