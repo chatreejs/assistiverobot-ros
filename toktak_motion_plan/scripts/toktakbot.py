@@ -2,9 +2,10 @@
 
 import rospy
 
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import actionlib
 from actionlib_msgs.msg import *
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Pose, PoseWithCovarianceStamped, Point, Quaternion, Twist
 from kobuki_msgs.msg import PowerSystemEvent, AutoDockingAction, AutoDockingGoal, SensorState
 from kobuki_msgs.msg import ButtonEvent
 import math
@@ -25,6 +26,7 @@ class Toktakbot():
     ####### END OPTIONVAL VALUES TO CHANGE ##########
 
     ####### DEFAULT vALUES ##########
+    move_base = False
     # is kobuki's battery low?
     is_battery_low = False
     # 1000 isn't possible. Just a large fake # so the script starts believing the battery is fine
@@ -44,6 +46,13 @@ class Toktakbot():
         # What to do if shut down (e.g. ctrl + C or failure)
         rospy.on_shutdown(self.shutdown)
 
+        # tell the action client that we want to spin a thread by default
+        self.move_base = actionlib.SimpleActionClient(
+            "move_base", MoveBaseAction)
+        rospy.loginfo("wait for the action server to come up")
+        # allow up to 30 seconds for the action server to come up
+    	self.move_base.wait_for_server(rospy.Duration(30))
+
         # Monitor Kobuki's power and charging status.
         # If an event occurs (low battery, charging, not charging etc) call function SensorPowerEventCallback
         rospy.Subscriber("/mobile_base/sensors/core",
@@ -60,12 +69,35 @@ class Toktakbot():
             rospy.loginfo("Waiting for button B0 to be pressed.")
             time.sleep(2)
             return True
-        
+
         if (self.is_need_power()):
             return True
 
+        goal = MoveBaseGoal()
+
         if (self.data):
             self.exit_from_charging_station()
+
+            goal.target_pose.pose = Pose(
+                Point(-10, 0, 0),
+                Quaternion(0, 0, 0, 0)
+            )
+
+            self.move_base.send_goal(goal)
+
+            success = self.move_base.wait_for_result(rospy.Duration(60))
+
+            if not success:
+			    # failed to reach goal (e.g. TurtleBot can't find a way to go to the location)
+        	    self.move_base.cancel_goal()
+        	    rospy.loginfo("The base failed to reach the desired pose")
+            else:
+			    state = self.move_base.get_state()
+                # if state == GoalStatus.SUCCEEDED:
+                #     rospy.loginfo("Hooray, reached the desired pose!  Press B0 to allow TurtleBot to continue.")
+                #     # tell TurtleBot not to move until the customer presses B0
+                #     self.cannot_move_until_b0_is_pressed = True
+
         else:
             if (not self.is_charging):
                 self.dock_with_charging_station()
@@ -73,12 +105,13 @@ class Toktakbot():
                 time.sleep(2)
 
         return True
-    
+
     def is_need_power(self):
         # Are we currently charging at the docking station?
         # If yes only continue if we're not fully charged
         if (self.is_charging and self.is_battery_low):
-            rospy.loginfo("I'm charging and will continue when I'm sufficiently charged")
+            rospy.loginfo(
+                "I'm charging and will continue when I'm sufficiently charged")
             time.sleep(30)
             return True
         # Are we not currently charging and is either battery low?
@@ -100,7 +133,7 @@ class Toktakbot():
 
             r = rospy.Rate(10)
             temp_count = 0
-            while (not rospy.is_shutdown() and temp_count < 20):
+            while (not rospy.is_shutdown() and temp_count < 50):
                 cmd_vel.publish(move_cmd)
                 temp_count = temp_count + 1
                 r.sleep()
@@ -135,7 +168,7 @@ class Toktakbot():
         else:
             rospy.loginfo("auto_docking failed")
             return False
-    
+
     def go_to_charging_station(self):
         return True
 
