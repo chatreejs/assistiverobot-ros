@@ -1,13 +1,15 @@
 # ROS-Robotics
 [![Build Status](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation.svg?branch=master)](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation)
 
-This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinrobot.com/about2/) to make a slam and navigation , published by Chanon Treemeth and Jirawat Promsee.
+This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinrobot.com/about2/) to make a delivery robot using slam and navigation, published by Chanon Treemeth and Jirawat Promsee.
 
 ## Prerequisites
 
 * [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 * [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
 * [Kobuki Package](http://wiki.ros.org/kobuki/Tutorials/Installation)
+* [Navigation Package]()
+* [Open SLAM Package]()
 
 If you don't have catkin workspace, Let's create and build a catkin workspace:
 
@@ -41,40 +43,42 @@ Setup environment of your current shell.
 
 Only support at ROS Kinetic
 
-### 1. Install Kobuki
+### Setup before using kobuki
+**1. Install Kobuki**
 
 ```
 $ sudo apt-get install ros-kinetic-kobuki ros-kinetic-kobuki-core
 ```
 
-### 2. Dialout Group
+**2. Dialout Group**
+
 If not already in the dialout group: 
 ```
 $ sudo usermod -a -G dialout $USER
 ```
 and then log out, log back in again. 
 
-### 3. Set Udev Rule
+**3. Set Udev Rule**
 ```
 $ rosrun kobuki_ftdi create_udev_rules
 ```
 Reinsert the Kobuki's USB cable into your laptop/pc/... You should now find it show up at /dev/kobuki. 
 
-### 4. Keyboard Teleoperation
+### Bring up
+
+You must start `kobuki_node` before launch other scripts
+
 ```
-# In a first shell
 $ . /opt/ros/kinetic/setup.bash
 $ roslaunch kobuki_node minimal.launch --screen
-# In a second shell
-$ . /opt/ros/kinetic/setup.bash
-$ roslaunch kobuki_keyop keyop.launch --screen
 ```
 
 ## Simulation Toktak (Kobuki base)
 
 Only support at ROS Kinetic
 
-### Spawn robot to world
+You must spawn robot to world before launch other scripts
+
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
 * `$ roslaunch toktak_description spawn.launch world:=<WORLD_NAME>`
 * if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
@@ -84,17 +88,17 @@ Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or 
 To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
 * `$ roslaunch toktak_description view_model.launch`
 
-### Running Obstacle Avoidance Algorithm
-
-To start `obstacle avoidance algorithm` run the **ObstacleAvoidance.py** in a new **Shell**
-
-* `$ rosrun toktak_motion_plan ObstacleAvoidance.py`
-
 ### Running Open SLAM GMapping
 
 To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
 
 * `$ roslaunch toktak_motion_plan gmapping.launch`
+
+### Running Navigation
+
+To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
+
+* `$ roslaunch toktak_navigation toktak_navigation.launch`
 
 ## Troubleshooting
 ### [gazebo-2] process has died , error exit code 255
