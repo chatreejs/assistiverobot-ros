@@ -110,16 +110,6 @@ $ kilall gzclient
 ```
 
 ### ERROR: cannot launch node of type [gmapping/slam_gmapping]
-If you see error like
-
-```
-ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
-ROS path [0]=/opt/ros/kinetic/share/ros
-ROS path [1]=/home/peng/turtlebot3_ws/src
-ROS path [2]=/home/peng/catkin_ws/src
-ROS path [3]=/home/peng/study_ws/src
-ROS path [4]=/opt/ros/kinetic/share
-```
 
 It seems like gmapping is missing. Try
 
