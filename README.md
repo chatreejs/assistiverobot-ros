@@ -1,13 +1,15 @@
 # Kobuki SLAM Navigation
 [![Build Status](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation.svg?branch=master)](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation)
 
-This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinrobot.com/about2/) to make a slam and navigation , published by Chanon Treemeth and Jirawat Promsee.
+This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinrobot.com/about2/) to make a delivery robot using slam and navigation, published by Chanon Treemeth and Jirawat Promsee.
 
 ## Prerequisites
 
 * [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 * [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
 * [Kobuki Package](http://wiki.ros.org/kobuki/Tutorials/Installation)
+* [Navigation Package]()
+* [Open SLAM Package]()
 
 If you don't have catkin workspace, Let's create and build a catkin workspace:
 
@@ -41,34 +43,62 @@ Setup environment of your current shell.
 
 Only support at ROS Kinetic
 
-## Simulation
+### Setup before using kobuki
+**1. Install Kobuki**
 
-### 1. Simulation two wheel robot
+```
+$ sudo apt-get install ros-kinetic-kobuki ros-kinetic-kobuki-core
+```
 
-#### Spawn robot to world
+**2. Dialout Group**
+
+If not already in the dialout group: 
+```
+$ sudo usermod -a -G dialout $USER
+```
+and then log out, log back in again. 
+
+**3. Set Udev Rule**
+```
+$ rosrun kobuki_ftdi create_udev_rules
+```
+Reinsert the Kobuki's USB cable into your laptop/pc/... You should now find it show up at /dev/kobuki. 
+
+### Bring up
+
+You must start `kobuki_node` before launch other scripts
+
+```
+$ . /opt/ros/kinetic/setup.bash
+$ roslaunch kobuki_node minimal.launch --screen
+```
+
+## Simulation Toktak (Kobuki base)
+
+Only support at ROS Kinetic
+
+You must spawn robot to world before launch other scripts
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
-  * ```$ roslaunch m2wr_description spawn.launch world:=<WORLD_NAME>```
-  * if `<WORLD_NAME>` not exists in `/my_worlds/world/` it will become an `empty_world` automatically.
-  
+* `$ roslaunch toktak_description spawn.launch world:=<WORLD_NAME>`
+* if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
+
+### Vizualization robot
+
 To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
-  * ```$ roslaunch m2wr_description rviz.launch```
+* `$ roslaunch toktak_description view_model.launch`
 
-#### Running Obstacle Avoidance Algorithm
-
-To start `obstacle avoidance algorithm` run the **obstacle_avoidance.py** in a new **Shell**
-
-* ```$ rosrun motion_plan obstacle_avoidance.py```
-
-#### Running Open SLAM GMapping
+### Running Open SLAM GMapping
 
 To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
 
-* ```$ roslaunch motion_plan gmapping.launch```
+* `$ roslaunch toktak_motion_plan gmapping.launch`
 
-### 2. Simulation Kobuki
+### Running Navigation
 
-Only support at ROS Kinetic
+To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
+
+* `$ roslaunch toktak_navigation toktak_navigation.launch`
 
 ## Troubleshooting
 ### [gazebo-2] process has died , error exit code 255
@@ -78,6 +108,22 @@ The most probable cause is that you have the gzclient or gzserver opened. Try wi
 $ killall gzserver
 $ kilall gzclient
 ```
+
+### ERROR: cannot launch node of type [gmapping/slam_gmapping]
+If you see error like
+
+```
+ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
+ROS path [0]=/opt/ros/kinetic/share/ros
+ROS path [1]=/home/peng/turtlebot3_ws/src
+ROS path [2]=/home/peng/catkin_ws/src
+ROS path [3]=/home/peng/study_ws/src
+ROS path [4]=/opt/ros/kinetic/share
+```
+
+It seems like gmapping is missing. Try
+
+```sudo apt-get install ros-<DISTRO>-gmapping```
 
 ### CMake Error could not find a package configuration file provided by "openslam_gmapping"
 If you see error like
@@ -97,23 +143,25 @@ CMake Error at /opt/ros/melodic/share/catkin/cmake/catkinConfig.cmake:83 (find_p
 ```
 It seems like openslam_gmapping is missing. Try
 
-```sudo apt-get install ros-<DISTRO>-openslam-gmapping```
-
-### ERROR: cannot launch node of type [gmapping/slam_gmapping]
-If you see error like
-
 ```
-ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
-ROS path [0]=/opt/ros/kinetic/share/ros
-ROS path [1]=/home/peng/turtlebot3_ws/src
-ROS path [2]=/home/peng/catkin_ws/src
-ROS path [3]=/home/peng/study_ws/src
-ROS path [4]=/opt/ros/kinetic/share
+$ sudo apt-get install ros-<DISTRO>-openslam-gmapping
 ```
 
-It seems like gmapping is missing. Try
+### ERROR: cannot launch node of type [map_server/map_server]: map_server, [amcl/amcl]: amcl, [move_base/move_base]: move_base
 
-```sudo apt-get install ros-<DISTRO>-gmapping```
+It seems like navigation package is missing. Try
+
+```
+$ sudo apt-get install ros-<DISTRO>-navigation-tutorials 
+```
+
+### Failed to create the dwa_local_planner/DWAPlannerROS planner
+
+It seems like dwa-local-planner is missing. Try
+
+```
+$ sudo apt-get install ros-<DISTRO>-dwa-local-planner
+```
 
 ## Contributors
 

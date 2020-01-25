@@ -1,0 +1,12 @@
+<launch>
+    <!-- Kobuki Node -->
+    <include file="$(find kobuki_node)/launch/minimal.launch"/>
+
+    <!-- Auto Docking -->
+    <include file="$(find kobuki_auto_docking)/launch/minimal.launch" />
+
+    <!-- Navigation -->
+    <include file="$(find toktak_navigation)/launch/toktak_navigation.launch" />
+
+    <node pkg="toktak_apps" name="toktakbot" type="toktakbot.py" output="screen"></node>
+</launch>
