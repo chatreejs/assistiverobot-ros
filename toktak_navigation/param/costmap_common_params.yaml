@@ -9,4 +9,11 @@ cost_scaling_factor: 1.0 #defalut 3.0
 
 map_type: costmap
 observation_sources: scan
-scan: {sensor_frame: base_scan, data_type: LaserScan, topic: laser/scan, marking: true, clearing: true}
+scan:
+  {
+    sensor_frame: sensor_laser_link,
+    data_type: LaserScan,
+    topic: laser/scan,
+    marking: true,
+    clearing: true,
+  }
