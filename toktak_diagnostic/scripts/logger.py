@@ -7,7 +7,7 @@ from Adafruit_CharLCD import Adafruit_CharLCD
 
 import math
 
-class Battery():
+class Logger():
     KOBUKI_BASE_MAX_CHARGE = 160
     kobuki_previous_battery_level = 1000
 
@@ -15,9 +15,9 @@ class Battery():
 
     def __init__(self):
         self.lcd.clear()
-        self.lcd.message("Kobuki")
+        self.lcd.message("Starting...")
 
-        rospy.init_node("toktak_battery", anonymous=False)
+        rospy.init_node("toktak_logger", anonymous=False)
 
         rospy.on_shutdown(self.shutdown)
 
@@ -42,10 +42,10 @@ class Battery():
         rospy.loginfo("Stop")
 
 if __name__ == '__main__':
-    delivery_checks = 0
+    temp = 0
     try:
-        bot = Battery()
+        logger = Logger()
         while (not rospy.is_shutdown()):
-            delivery_checks = delivery_checks + 1
+            temp = temp + 1
     except rospy.ROSInterruptException:
         rospy.loginfo("Exception thrown")
