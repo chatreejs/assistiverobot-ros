@@ -10,6 +10,7 @@ This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinr
 * [Kobuki Package](http://wiki.ros.org/kobuki/Tutorials/Installation)
 * [Navigation Package]()
 * [Open SLAM Package]()
+* [RPLIDAR Package]()
 
 If you don't have catkin workspace, Let's create and build a catkin workspace:
 
@@ -37,45 +38,19 @@ $ catkin_make
 
 Setup environment of your current shell.
 
-`$ source devel/setup.bash`
+```$ source ~/catkin_ws/devel/setup.bash```
 
 ## Real-world robot using kobuki
-
-Only support at ROS Kinetic
-
-### Setup before using kobuki
-**1. Install Kobuki**
-
-```
-$ sudo apt-get install ros-kinetic-kobuki ros-kinetic-kobuki-core
-```
-
-**2. Dialout Group**
-
-If not already in the dialout group: 
-```
-$ sudo usermod -a -G dialout $USER
-```
-and then log out, log back in again. 
-
-**3. Set Udev Rule**
-```
-$ rosrun kobuki_ftdi create_udev_rules
-```
-Reinsert the Kobuki's USB cable into your laptop/pc/... You should now find it show up at /dev/kobuki. 
 
 ### Bring up
 
 You must start `kobuki_node` before launch other scripts
 
 ```
-$ . /opt/ros/kinetic/setup.bash
 $ roslaunch kobuki_node minimal.launch --screen
 ```
 
-## Simulation Toktak (Kobuki base)
-
-Only support at ROS Kinetic
+## Gazebo Simulation : Toktak (Kobuki base)
 
 You must spawn robot to world before launch other scripts
 
@@ -114,11 +89,6 @@ If you see error like
 
 ```
 ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
-ROS path [0]=/opt/ros/kinetic/share/ros
-ROS path [1]=/home/peng/turtlebot3_ws/src
-ROS path [2]=/home/peng/catkin_ws/src
-ROS path [3]=/home/peng/study_ws/src
-ROS path [4]=/opt/ros/kinetic/share
 ```
 
 It seems like gmapping is missing. Try
