@@ -5,12 +5,14 @@ This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinr
 
 ## Prerequisites
 
-* [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
+* [ROS](https://www.ros.org/install/)
 * [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
 * [Kobuki Package](http://wiki.ros.org/kobuki/Tutorials/Installation)
 * [Navigation Package]()
 * [Open SLAM Package]()
 * [RPLIDAR Package]()
+
+See detailed installation instructions [here]().
 
 If you don't have catkin workspace, Let's create and build a catkin workspace:
 
