@@ -28,7 +28,7 @@ Firstly, clone this repository to your catkin workspace.
 
 ```
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/Chanonsersa/ROS-Robotics.git
+$ git clone https://github.com/Chanonsersa/Kobuki-SLAM-Navigation.git
 ```
 
 Build package using `catkin_make`.
