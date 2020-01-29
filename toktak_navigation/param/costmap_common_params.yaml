@@ -13,7 +13,7 @@ scan:
   {
     sensor_frame: sensor_laser_link,
     data_type: LaserScan,
-    topic: laser/scan,
+    topic: peedscan,
     marking: true,
     clearing: true,
   }
