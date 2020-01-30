@@ -40,7 +40,9 @@ $ catkin_make
 
 Setup environment of your current shell.
 
-```$ source ~/catkin_ws/devel/setup.bash```
+```
+$ source ~/catkin_ws/devel/setup.bash
+```
 
 ## Real-world robot using kobuki
 
@@ -49,7 +51,23 @@ Setup environment of your current shell.
 You must start `kobuki_node` before launch other scripts
 
 ```
-$ roslaunch kobuki_node minimal.launch --screen
+$ roslaunch toktak_node minimal.launch --screen
+```
+
+### Teleoperation
+
+To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
+
+```
+$ roslaunch kobuki_keyop keyop.launch
+```
+
+### Running OpenSLAM GMapping
+
+To start `GMapping` launch the **toktak_gmapping.launch** file in a new **Shell**
+
+```
+$ roslaunch toktak_slam toktak_gmapping.launch
 ```
 
 ## Gazebo Simulation : Toktak (Kobuki base)
@@ -57,25 +75,35 @@ $ roslaunch kobuki_node minimal.launch --screen
 You must spawn robot to world before launch other scripts
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
-* `$ roslaunch toktak_description spawn.launch world:=<WORLD_NAME>`
-* if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
 
-### Vizualization robot
+```
+$ roslaunch toktak_gazebo spawn.launch world:=<WORLD_NAME>
+```
+if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
 
-To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
-* `$ roslaunch toktak_description view_model.launch`
+### Teleoperation
 
-### Running Open SLAM GMapping
+To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
 
-To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
+```
+$ roslaunch kobuki_keyop keyop.launch
+```
 
-* `$ roslaunch toktak_motion_plan gmapping.launch`
+### Running OpenSLAM GMapping
+
+To start `GMapping` launch the **toktak_gazebo_gmapping.launch** file in a new **Shell**
+
+```
+$ roslaunch toktak_motion_plan toktak_gazebo_gmapping.launch
+```
 
 ### Running Navigation
 
 To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
 
-* `$ roslaunch toktak_navigation toktak_navigation.launch`
+```
+$ roslaunch toktak_navigation toktak_navigation.launch
+```
 
 ## Troubleshooting
 ### [gazebo-2] process has died , error exit code 255
@@ -95,7 +123,9 @@ ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
 
 It seems like gmapping is missing. Try
 
-```sudo apt-get install ros-<DISTRO>-gmapping```
+```
+sudo apt-get install ros-<DISTRO>-gmapping
+```
 
 ### CMake Error could not find a package configuration file provided by "openslam_gmapping"
 If you see error like
@@ -137,9 +167,7 @@ $ sudo apt-get install ros-<DISTRO>-dwa-local-planner
 
 ## Contributors
 
-<a href="https://github.com/Chanonsersa"><img src="https://avatars0.githubusercontent.com/u/36321701?s=460&v=4" title="Chanonsersa" width="80" height="80"></a>
-
-<a href="https://github.com/tarrelateto1"><img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="80" height="80"></a>
+<a href="https://github.com/Chanonsersa"><img src="https://avatars0.githubusercontent.com/u/36321701?s=460&v=4" title="Chanonsersa" width="50" height="50"></a> <a href="https://github.com/tarrelateto1"><img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="50" height="50"></a>
 
 ## License
 
