@@ -3,7 +3,7 @@
   <arg name="odom_frame" default="odom"/>
   <arg name="model" default="$(find toktak_description)/urdf/kobuki_standalone.urdf.xacro"/>
 
-  <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0.08 0 0 0 0 0 base_footprint laser 100" />
+  <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0 0 0 0 base_footprint laser 100" />
 
   <node pkg="rviz" type="rviz" name="rviz"></node>
 
