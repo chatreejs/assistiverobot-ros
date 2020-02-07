@@ -5,7 +5,7 @@ import rospy
 from kobuki_msgs.msg import BumperEvent
 
 
-def clbk_bumper(msg):
+def BumperCallBack(msg):
     if (msg.bumper == BumperEvent.CENTER and msg.state == BumperEvent.PRESSED):
         rospy.loginfo("Front hit")
     elif (msg.bumper == BumperEvent.LEFT and msg.state == BumperEvent.PRESSED):
@@ -19,7 +19,7 @@ def clbk_bumper(msg):
 def main():
     rospy.init_node("reading_bumper")
 
-    bumper_sub = rospy.Subscriber("/mobile_base/events/bumper", BumperEvent, clbk_bumper)
+    rospy.Subscriber("/mobile_base/events/bumper", BumperEvent, BumperCallBack)
 
     rospy.spin()
 

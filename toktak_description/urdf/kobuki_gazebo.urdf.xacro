@@ -174,11 +174,11 @@
 			<sensor type="ray" name="head_hokuyo_sensor">
 				<pose>0 0 0 0 0 0</pose>
 				<visualize>false</visualize>
-				<update_rate>5</update_rate>
+				<update_rate>10</update_rate>
 				<ray>
 					<scan>
 						<horizontal>
-							<samples>2000</samples>
+							<samples>720</samples>
 							<resolution>1</resolution>
 							<min_angle>-3.141592</min_angle>
 							<max_angle>3.141592</max_angle>
@@ -196,7 +196,7 @@
 					</noise>
 				</ray>
 				<plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-					<topicName>/laser/scan</topicName>
+					<topicName>/scan</topicName>
 					<frameName>sensor_laser_link</frameName>
 				</plugin>
 			</sensor>

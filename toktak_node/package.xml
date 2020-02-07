@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>toktak_node</name>
+  <version>0.0.0</version>
+  <description>The toktak_node package</description>
+
+  <author email="chanon.sloth@g.swu.ac.th">Chanon Treemeth</author>
+  <author email="jirawat.tar@g.swu.ac.th">Jirawat Promsee</author>
+
+  <maintainer email="chanon.sloth@g.swu.ac.th">Chanon Treemeth</maintainer>
+  <maintainer email="jirawat.tar@g.swu.ac.th">Jirawat Promsee</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

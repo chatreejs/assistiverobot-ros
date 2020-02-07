@@ -1,0 +1,25 @@
+<launch>
+    <arg name="kobuki_publish_tf" default="true"/>
+    <!-- Publish base_footprint - odom transforms (usually good thing to have for localisation) -->
+
+    <node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
+    <node pkg="nodelet" type="nodelet" name="mobile_base" args="load kobuki_node/KobukiNodelet mobile_base_nodelet_manager">
+        <rosparam file="$(find kobuki_node)/param/base.yaml" command="load"/>
+        <param name="publish_tf" value="$(arg kobuki_publish_tf)"/>
+        <remap from="mobile_base/odom" to="odom"/>
+        <remap from="mobile_base/joint_states" to="joint_states"/>
+    </node>
+
+    <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator">
+        <rosparam command="load" file="$(find kobuki_node)/param/diagnostics.yaml" />
+    </node>
+
+    <node name="rplidarNode" pkg="rplidar_ros" type="rplidarNode" output="screen">
+        <param name="serial_port" type="string" value="/dev/rplidar"/>
+        <param name="serial_baudrate" type="int" value="115200"/>
+        <param name="frame_id" type="string" value="laser"/>
+        <param name="inverted" type="bool" value="false"/>
+        <param name="angle_compensate" type="bool" value="true"/>
+        <param name="scan_mode" type="string" value="Boost"/>
+    </node>
+</launch>

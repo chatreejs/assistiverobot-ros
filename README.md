@@ -5,11 +5,14 @@ This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinr
 
 ## Prerequisites
 
-* [ROS Kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
+* [ROS](https://www.ros.org/install/)
 * [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
 * [Kobuki Package](http://wiki.ros.org/kobuki/Tutorials/Installation)
 * [Navigation Package]()
 * [Open SLAM Package]()
+* [RPLIDAR Package]()
+
+See detailed installation instructions [here]().
 
 If you don't have catkin workspace, Let's create and build a catkin workspace:
 
@@ -25,7 +28,7 @@ Firstly, clone this repository to your catkin workspace.
 
 ```
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/Chanonsersa/ROS-Robotics.git
+$ git clone https://github.com/Chanonsersa/Kobuki-SLAM-Navigation.git
 ```
 
 Build package using `catkin_make`.
@@ -37,68 +40,70 @@ $ catkin_make
 
 Setup environment of your current shell.
 
-```$ source devel/setup.bash```
+```
+$ source ~/catkin_ws/devel/setup.bash
+```
 
 ## Real-world robot using kobuki
-
-Only support at ROS Kinetic
-
-### Setup before using kobuki
-**1. Install Kobuki**
-
-```
-$ sudo apt-get install ros-kinetic-kobuki ros-kinetic-kobuki-core
-```
-
-**2. Dialout Group**
-
-If not already in the dialout group: 
-```
-$ sudo usermod -a -G dialout $USER
-```
-and then log out, log back in again. 
-
-**3. Set Udev Rule**
-```
-$ rosrun kobuki_ftdi create_udev_rules
-```
-Reinsert the Kobuki's USB cable into your laptop/pc/... You should now find it show up at /dev/kobuki. 
 
 ### Bring up
 
 You must start `kobuki_node` before launch other scripts
 
 ```
-$ . /opt/ros/kinetic/setup.bash
-$ roslaunch kobuki_node minimal.launch --screen
+$ roslaunch toktak_node minimal.launch --screen
 ```
 
-## Simulation Toktak (Kobuki base)
+### Teleoperation
 
-Only support at ROS Kinetic
+To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
+
+```
+$ roslaunch kobuki_keyop keyop.launch
+```
+
+### Running OpenSLAM GMapping
+
+To start `GMapping` launch the **toktak_gmapping.launch** file in a new **Shell**
+
+```
+$ roslaunch toktak_slam toktak_gmapping.launch
+```
+
+## Gazebo Simulation : Toktak (Kobuki base)
 
 You must spawn robot to world before launch other scripts
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
-* `$ roslaunch toktak_description spawn.launch world:=<WORLD_NAME>`
-* if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
 
-### Vizualization robot
+```
+$ roslaunch toktak_gazebo spawn.launch world:=<WORLD_NAME>
+```
+if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
 
-To start `rviz` visualiztion launch the **rviz.launch** file in a new **Shell** 
-* `$ roslaunch toktak_description view_model.launch`
+### Teleoperation
 
-### Running Open SLAM GMapping
+To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
 
-To start `GMapping` launch the **gmapping.launch** file in a new **Shell**
+```
+$ roslaunch kobuki_keyop keyop.launch
+```
 
-* `$ roslaunch toktak_motion_plan gmapping.launch`
+### Running OpenSLAM GMapping
+
+To start `GMapping` launch the **toktak_gazebo_gmapping.launch** file in a new **Shell**
+
+```
+$ roslaunch toktak_motion_plan toktak_gazebo_gmapping.launch
+```
 
 ### Running Navigation
 
 To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
 
-* `$ roslaunch toktak_navigation toktak_navigation.launch`
+```
+$ roslaunch toktak_navigation toktak_navigation.launch
+```
 
 ## Troubleshooting
 ### [gazebo-2] process has died , error exit code 255
@@ -111,9 +116,15 @@ $ kilall gzclient
 
 ### ERROR: cannot launch node of type [gmapping/slam_gmapping]
 
+```
+ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
+```
+
 It seems like gmapping is missing. Try
 
-```sudo apt-get install ros-<DISTRO>-gmapping```
+```
+sudo apt-get install ros-<DISTRO>-gmapping
+```
 
 ### CMake Error could not find a package configuration file provided by "openslam_gmapping"
 If you see error like
@@ -155,9 +166,7 @@ $ sudo apt-get install ros-<DISTRO>-dwa-local-planner
 
 ## Contributors
 
-<a href="https://github.com/Chanonsersa"><img src="https://avatars0.githubusercontent.com/u/36321701?s=460&v=4" title="Chanonsersa" width="80" height="80"></a>
-
-<a href="https://github.com/tarrelateto1"><img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="80" height="80"></a>
+<a href="https://github.com/Chanonsersa"><img src="https://avatars0.githubusercontent.com/u/36321701?s=460&v=4" title="Chanonsersa" width="50" height="50"></a> <a href="https://github.com/tarrelateto1"><img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="50" height="50"></a>
 
 ## License
 
