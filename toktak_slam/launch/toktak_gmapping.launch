@@ -2,10 +2,16 @@
   <arg name="base_frame" default="base_footprint"/>
   <arg name="odom_frame" default="odom"/>
   <arg name="model" default="$(find toktak_description)/urdf/kobuki_standalone.urdf.xacro"/>
+  <arg name="gazebo" default="true" />
+  <arg name="open_rviz" default="true"/>
 
-  <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0 0 0 0 base_footprint laser 100" />
+  <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0 0 0 0 base_footprint laser 100" unless="$(arg gazebo)" />
 
-  <node pkg="rviz" type="rviz" name="rviz"></node>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" if="$(arg gazebo)">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+
+  <node pkg="rviz" type="rviz" name="rviz" if="$(arg open_rviz)" />
 
   <node pkg="gmapping" type="slam_gmapping" name="gmapping">
     <param name="base_frame" value="$(arg base_frame)"/>
@@ -44,8 +50,4 @@
   </node>
 
   <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
-
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-    <param name="publish_frequency" type="double" value="30.0" />
-  </node>
 </launch>
