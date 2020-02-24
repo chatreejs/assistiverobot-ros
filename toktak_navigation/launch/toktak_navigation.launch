@@ -1,11 +1,23 @@
 <launch>
   <!-- Arguments -->
-  <arg name="map_file" default="$(find toktak_navigation)/maps/map.yaml"/>
+  <arg name="map_file" default="$(find toktak_navigation)/maps/18_floor.yaml"/>
+  <arg name="model" default="$(find toktak_description)/urdf/kobuki_standalone.urdf.xacro"/>
+  <arg name="gazebo" default="true" />
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="true"/>
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- robot_state -->
+  <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0 0 0 0 base_footprint laser 100" unless="$(arg gazebo)" />
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" if="$(arg gazebo)">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find toktak_navigation)/rviz/toktak_navigation.rviz" if="$(arg open_rviz)" />
 
   <!-- AMCL -->
   <include file="$(find toktak_navigation)/launch/amcl.launch"/>
@@ -15,28 +27,21 @@
     <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
 
-  <!-- rviz -->
-  <group if="$(arg open_rviz)">
-    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find toktak_navigation)/rviz/toktak_navigation.rviz"/>
-  </group>
-
-  <!-- robot_state -->
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-    <param name="publish_frequency" type="double" value="50.0" />
-  </node>
+  
 
   <!-- Command Velocity mux -->
-  <node pkg="nodelet" type="nodelet" name="cmd_vel_mux" args="load yocs_cmd_vel_mux/CmdVelMuxNodelet mobile_base_nodelet_manager">
+  <!-- <node pkg="nodelet" type="nodelet" name="cmd_vel_mux" args="load yocs_cmd_vel_mux/CmdVelMuxNodelet mobile_base_nodelet_manager">
     <param name="yaml_cfg_file" value="$(find kobuki_random_walker)/param/cmd_vel_mux.yaml"/>
     <remap from="cmd_vel_mux/output/cmd_vel" to="mobile_base/commands/velocity"/>
-  </node>
+  </node> -->
 
   <!-- Safety Controller -->
-  <node pkg="nodelet" type="nodelet" name="kobuki_safety_controller" args="load kobuki_safety_controller/SafetyControllerNodelet mobile_base_nodelet_manager">
+  <!-- <node pkg="nodelet" type="nodelet" name="kobuki_safety_controller" args="load kobuki_safety_controller/SafetyControllerNodelet mobile_base_nodelet_manager">
     <remap from="kobuki_safety_controller/cmd_vel" to="cmd_vel_mux/safety_controller"/>
     <remap from="kobuki_safety_controller/events/bumper" to="mobile_base/events/bumper"/>
     <remap from="kobuki_safety_controller/events/cliff" to="mobile_base/events/cliff"/>
     <remap from="kobuki_safety_controller/events/wheel_drop" to="mobile_base/events/wheel_drop"/>
-  </node>
+  </node> -->
 
+  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 </launch>
