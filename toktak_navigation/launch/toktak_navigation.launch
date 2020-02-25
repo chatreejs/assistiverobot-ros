@@ -1,16 +1,18 @@
 <launch>
   <!-- Arguments -->
+  <arg name="map_file" default="$(find toktak_navigation)/maps/18_floor.yaml"/>
   <arg name="model" default="$(find toktak_description)/urdf/kobuki_standalone.urdf.xacro"/>
   <arg name="gazebo" default="true" />
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="true"/>
 
   <!-- Map server -->
-  <node pkg="map_server" name="map_server" type="map_server" args="$(find toktak_navigation)/maps/map.yaml" if="$(arg gazebo)" />
-  <node pkg="map_server" name="map_server" type="map_server" args="$(find toktak_navigation)/maps/18_floor.yaml" unless="$(arg gazebo)" />
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
 
   <!-- robot_state -->
-  <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0 0 0 0 base_footprint sensor_laser_link 100" unless="$(arg gazebo)" />
+  <group unless="$(arg gazebo)">
+    <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0.3 0 0 0 base_footprint laser 100" />
+  </group>
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" if="$(arg gazebo)">
     <param name="publish_frequency" type="double" value="30.0" />
