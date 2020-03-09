@@ -7,9 +7,7 @@
 
   <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0 0 0 0 base_footprint laser 100" unless="$(arg gazebo)" />
 
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" if="$(arg gazebo)">
-    <param name="publish_frequency" type="double" value="30.0" />
-  </node>
+  <param name="publish_frequency" type="double" value="30.0" />
 
   <node pkg="rviz" type="rviz" name="rviz" if="$(arg open_rviz)" />
 

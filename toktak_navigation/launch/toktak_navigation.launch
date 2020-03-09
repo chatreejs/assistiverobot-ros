@@ -14,7 +14,7 @@
     <node pkg="tf" type="static_transform_publisher" name="laser_broadcaster" args="0 0 0.3 0 0 0 base_footprint laser 100" />
   </group>
 
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" if="$(arg gazebo)">
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="30.0" />
   </node>
 
@@ -29,21 +29,19 @@
     <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
 
-  
-
   <!-- Command Velocity mux -->
-  <!-- <node pkg="nodelet" type="nodelet" name="cmd_vel_mux" args="load yocs_cmd_vel_mux/CmdVelMuxNodelet mobile_base_nodelet_manager">
+  <node pkg="nodelet" type="nodelet" name="cmd_vel_mux" args="load yocs_cmd_vel_mux/CmdVelMuxNodelet mobile_base_nodelet_manager">
     <param name="yaml_cfg_file" value="$(find kobuki_random_walker)/param/cmd_vel_mux.yaml"/>
     <remap from="cmd_vel_mux/output/cmd_vel" to="mobile_base/commands/velocity"/>
-  </node> -->
+  </node>
 
   <!-- Safety Controller -->
-  <!-- <node pkg="nodelet" type="nodelet" name="kobuki_safety_controller" args="load kobuki_safety_controller/SafetyControllerNodelet mobile_base_nodelet_manager">
+  <node pkg="nodelet" type="nodelet" name="kobuki_safety_controller" args="load kobuki_safety_controller/SafetyControllerNodelet mobile_base_nodelet_manager">
     <remap from="kobuki_safety_controller/cmd_vel" to="cmd_vel_mux/safety_controller"/>
     <remap from="kobuki_safety_controller/events/bumper" to="mobile_base/events/bumper"/>
     <remap from="kobuki_safety_controller/events/cliff" to="mobile_base/events/cliff"/>
     <remap from="kobuki_safety_controller/events/wheel_drop" to="mobile_base/events/wheel_drop"/>
-  </node> -->
+  </node>
 
   <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 </launch>
