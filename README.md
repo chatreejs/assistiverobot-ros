@@ -1,22 +1,22 @@
-# Kobuki SLAM Navigation
-[![Build Status](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation.svg?branch=master)](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation)
+# An Assistive Robot for Convenient Delivery in Indoor Environment
+[![Build Status](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation.svg?branch=master)](https://travis-ci.com/Chanonsersa/Kobuki-SLAM-Navigation) ![ROS Distro](https://img.shields.io/badge/ROS-melodic-brightgreen)
 
-This is the code repository for ROS Robotics using [kobuki](http://kobuki.yujinrobot.com/about2/) to make a delivery robot using slam and navigation, published by Chanon Treemeth and Jirawat Promsee.
+This is the code repository for ROS Robotics using [Kobuki](http://kobuki.yujinrobot.com/about2/) and [RPLIDAR A1](http://www.slamtec.com/en/lidar/a1) to make a delivery robot using slam and navigation, published by Chanon Treemeth and Jirawat Promsee.
 
 ## Prerequisites
 
 * [ROS](https://www.ros.org/install/)
 * [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
-* [Kobuki Package](http://wiki.ros.org/kobuki/Tutorials/Installation)
-* [Navigation Package]()
-* [Open SLAM Package]()
+* [Kobuki Package](http://wiki.ros.org/kobuki)
+* [Navigation Package](http://wiki.ros.org/navigation)
+* [Open SLAM Package](http://wiki.ros.org/openslam_gmapping)
 * [RPLIDAR Package]()
 
-See detailed installation instructions [here]().
+See detailed installation instructions [here](installation.md).
 
 If you don't have catkin workspace, Let's create and build a catkin workspace:
 
-```
+```bash
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/
 $ catkin_make
@@ -26,31 +26,31 @@ $ catkin_make
 
 Firstly, clone this repository to your catkin workspace.
 
-```
+```bash
 $ cd ~/catkin_ws/src
 $ git clone https://github.com/Chanonsersa/Kobuki-SLAM-Navigation.git
 ```
 
 Build package using `catkin_make`.
 
-```
+```bash
 $ cd ~/catkin_ws/
 $ catkin_make
 ```
 
 Setup environment of your current shell.
 
-```
+```bash
 $ source ~/catkin_ws/devel/setup.bash
 ```
 
-## Real-world robot using kobuki
+## Real-world robot using kobuki base
 
 ### Bring up
 
-You must start `kobuki_node` before launch other scripts
+You must start `toktak_node` before launch other scripts
 
-```
+```bash
 $ roslaunch toktak_node minimal.launch --screen
 ```
 
@@ -58,7 +58,7 @@ $ roslaunch toktak_node minimal.launch --screen
 
 To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
 
-```
+```bash
 $ roslaunch kobuki_keyop keyop.launch
 ```
 
@@ -66,17 +66,20 @@ $ roslaunch kobuki_keyop keyop.launch
 
 To start `GMapping` launch the **toktak_gmapping.launch** file in a new **Shell**
 
-```
-$ roslaunch toktak_slam toktak_gmapping.launch
+```bash
+$ roslaunch toktak_slam toktak_gmapping.launch gazebo:=false
 ```
 
-## Gazebo Simulation : Toktak (Kobuki base)
+### Application
+*In progress*
+
+## Simulation robot
 
 You must spawn robot to world before launch other scripts
 
 Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or **other world**.
 
-```
+```bash
 $ roslaunch toktak_gazebo spawn.launch world:=<WORLD_NAME>
 ```
 if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
@@ -85,7 +88,7 @@ if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_
 
 To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
 
-```
+```bash
 $ roslaunch kobuki_keyop keyop.launch
 ```
 
@@ -93,15 +96,15 @@ $ roslaunch kobuki_keyop keyop.launch
 
 To start `GMapping` launch the **toktak_gazebo_gmapping.launch** file in a new **Shell**
 
-```
-$ roslaunch toktak_motion_plan toktak_gazebo_gmapping.launch
+```bash
+$ roslaunch toktak_slam toktak_gmapping.launch
 ```
 
 ### Running Navigation
 
 To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
 
-```
+```bash
 $ roslaunch toktak_navigation toktak_navigation.launch
 ```
 
@@ -109,7 +112,7 @@ $ roslaunch toktak_navigation toktak_navigation.launch
 ### [gazebo-2] process has died , error exit code 255
 The most probable cause is that you have the gzclient or gzserver opened. Try with
 
-```
+```bash
 $ killall gzserver
 $ kilall gzclient
 ```
@@ -122,8 +125,8 @@ ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
 
 It seems like gmapping is missing. Try
 
-```
-sudo apt-get install ros-<DISTRO>-gmapping
+```bash
+$ sudo apt-get install ros-<DISTRO>-gmapping
 ```
 
 ### CMake Error could not find a package configuration file provided by "openslam_gmapping"
@@ -144,7 +147,7 @@ CMake Error at /opt/ros/melodic/share/catkin/cmake/catkinConfig.cmake:83 (find_p
 ```
 It seems like openslam_gmapping is missing. Try
 
-```
+```bash
 $ sudo apt-get install ros-<DISTRO>-openslam-gmapping
 ```
 
@@ -152,7 +155,7 @@ $ sudo apt-get install ros-<DISTRO>-openslam-gmapping
 
 It seems like navigation package is missing. Try
 
-```
+```bash
 $ sudo apt-get install ros-<DISTRO>-navigation-tutorials 
 ```
 
@@ -160,7 +163,7 @@ $ sudo apt-get install ros-<DISTRO>-navigation-tutorials
 
 It seems like dwa-local-planner is missing. Try
 
-```
+```bash
 $ sudo apt-get install ros-<DISTRO>-dwa-local-planner
 ```
 
