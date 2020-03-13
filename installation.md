@@ -165,7 +165,7 @@ $ sudo apt-get install ros-melodic-openslam-gmapping ros-melodic-gmapping
 ### 1. Create catkin workspace
 Create RPLIDAR workspace for build a RPLIDAR package:
 ```bash
-$ mkdir -p ~/rpliddar_ws/src
+$ mkdir -p ~/rplidar_ws/src
 ```
 
 ### 2. Clone RPLIDAR Package
