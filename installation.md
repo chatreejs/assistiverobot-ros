@@ -181,3 +181,23 @@ Build a kobuki package:
 $ cd ~/rpliddar_ws
 $ catkin_make
 ```
+
+### 5. Device Settings
+Check the authority of rplidar's serial-port :
+```bash
+$ ls -l /dev | grep ttyUSB
+```
+Add the authority of write: (such as /dev/ttyUSB0)
+```bash
+$ sudo chmod 666 /dev/ttyUSB0
+```
+
+For fixed rplidar port, you can using the script file to remap the USB port name:
+```bash
+$ cd ~/rplidar_ws/src/scripts
+$ ./create_udev_rules.sh
+```
+Once you have change the USB port remap, you can change the launch file about the serial_port value.
+```xml
+<param name="serial_port" type="string" value="/dev/rplidar"/>
+```
