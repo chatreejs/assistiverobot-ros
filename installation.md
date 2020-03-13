@@ -130,6 +130,21 @@ It's convenient if the ROS environment variables are automatically added to your
 $ echo "source ~/kobuki_ws/devel/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
 ```
+
+### 6. Dialout Group
+If not already in the dialout group:
+
+```bash
+$ sudo usermod -a -G dialout $USER
+```
+and then log out, log back in again.
+
+### 7. Set Udev Rule
+```
+$ rosrun kobuki_ftdi create_udev_rules
+```
+Reinsert the Kobuki's USB cable into your laptop/pc/... You should now find it show up at `/dev/kobuki.`
+
 ## Navigation Stack Package Installation
 ### 1. Install Navigation Stack Package
 ```bash
@@ -147,3 +162,22 @@ $ sudo apt-get install ros-melodic-openslam-gmapping ros-melodic-gmapping
 ```
 
 ## RPLIDAR Package Installation
+### 1. Create catkin workspace
+Create RPLIDAR workspace for build a RPLIDAR package:
+```bash
+$ mkdir -p ~/rpliddar_ws/src
+```
+
+### 2. Clone RPLIDAR Package
+Clone RPLIDAR package to `rplidar_ws`:
+```bash
+$ cd ~/rpliddar_ws/src
+$ git clone https://github.com/robopeak/rplidar_ros.git
+```
+
+### 4. Build package
+Build a kobuki package:
+```bash
+$ cd ~/rpliddar_ws
+$ catkin_make
+```
