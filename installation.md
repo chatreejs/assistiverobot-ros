@@ -171,7 +171,7 @@ $ mkdir -p ~/rpliddar_ws/src
 ### 2. Clone RPLIDAR Package
 Clone RPLIDAR package to `rplidar_ws`:
 ```bash
-$ cd ~/rpliddar_ws/src
+$ cd ~/rplidar_ws/src
 $ git clone https://github.com/robopeak/rplidar_ros.git
 ```
 
