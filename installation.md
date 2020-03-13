@@ -178,7 +178,7 @@ $ git clone https://github.com/robopeak/rplidar_ros.git
 ### 4. Build package
 Build a kobuki package:
 ```bash
-$ cd ~/rpliddar_ws
+$ cd ~/rplidar_ws
 $ catkin_make
 ```
 
