@@ -8,7 +8,8 @@
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(find toktak_navigation)/maps/map.yaml" if="$(arg gazebo)"/>
-  <node pkg="map_server" name="map_server" type="map_server" args="$(find toktak_navigation)/maps/18_floor.yaml" unless="$(arg gazebo)"/>
+  <!-- <node pkg="map_server" name="map_server" type="map_server" args="$(find toktak_navigation)/maps/18_floor.yaml" unless="$(arg gazebo)"/> -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(find toktak_navigation)/maps/406_room.yaml" unless="$(arg gazebo)"/>
 
   <!-- robot_state -->
   <group unless="$(arg gazebo)">
