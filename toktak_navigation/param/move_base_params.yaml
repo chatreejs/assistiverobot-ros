@@ -10,3 +10,8 @@ oscillation_timeout: 10.0
 oscillation_distance: 0.2
 
 conservative_reset_dist: 3.0
+
+# recovery_b ehavior_enabled: true
+# recovery_behaviors:
+#   - name: 'aggressive_reset'
+#     type: 'clear_costmap_recovery/ClearCostmapRecovery'
