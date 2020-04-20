@@ -61,7 +61,7 @@ if __name__=='__main__':
         rospy.init_node('simple_move',anonymous=True)
         rate = rospy.Rate(1) # 1 task per 1 second
         while True:
-            data = requests.get("http://192.168.2.36:5000/api/v1/jobs?status=pending").json()['result']
+            data = requests.get("http://192.168.31.197:5000/api/v1/jobs?status=pending").json()['result']
             if isinstance(data,dict): # 1 Data
                 simple_move(data) 
             elif isinstance(data,list): # 1 more datas
