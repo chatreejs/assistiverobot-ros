@@ -1,12 +1,15 @@
 <launch>
-    <!-- Kobuki Node -->
-    <include file="$(find kobuki_node)/launch/minimal.launch"/>
+    <!-- Toktak Node -->
+    <include file="$(find toktak_node)/launch/minimal.launch"/>
 
     <!-- Auto Docking -->
-    <include file="$(find kobuki_auto_docking)/launch/minimal.launch" />
+    <include file="$(find kobuki_auto_docking)/launch/standalone.launch" />
 
     <!-- Navigation -->
-    <include file="$(find toktak_navigation)/launch/toktak_navigation.launch" />
+    <include file="$(find toktak_navigation)/launch/toktak_navigation.launch">
+        <arg name="gazebo" value="false"/>
+        <arg name="open_rviz" value="false"/>
+    </include>
 
     <node pkg="toktak_apps" name="toktakbot" type="toktakbot.py" output="screen"></node>
 </launch>
