@@ -1,13 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
+import requests
 
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import actionlib
 from actionlib_msgs.msg import *
-from geometry_msgs.msg import Pose, PoseWithCovarianceStamped, Point, Quaternion, Twist
+from geometry_msgs.msg import Twist
 from kobuki_msgs.msg import PowerSystemEvent, AutoDockingAction, AutoDockingGoal, SensorState
-from kobuki_msgs.msg import ButtonEvent
 import math
 
 import time
@@ -15,17 +15,18 @@ import time
 
 class Toktakbot():
     ######## CHANGE THE FOLLOWING VALUES #########
+    SERVER_END_POINT = "http://192.168.31.197:5000/api/v1"
     # x coordinate for pose approx 1 meter from docking station
-    NEAR_DOCKING_STATION_X = -1.88
+    NEAR_DOCKING_STATION_X = -0.6
     # y coordinate for pose approx 1 meter from docking station
-    NEAR_DOCKING_STATION_Y = 0.06
+    NEAR_DOCKING_STATION_Y = 0.0
     ######## END CHANGE THE FOLLOWING VALUES #########
 
     ####### OPTIONVAL VALUES TO CHANGE ##########
     KOBUKI_BASE_MAX_CHARGE = 160
     ####### END OPTIONVAL VALUES TO CHANGE ##########
 
-    ####### DEFAULT vALUES ##########
+    ####### DEFAULT VALUES ##########
     move_base = False
     # is kobuki's battery low?
     is_battery_low = False
@@ -33,15 +34,11 @@ class Toktakbot():
     kobuki_previous_battery_level = 1000
     # can't leave docking station until it's full because battery was low
     is_charging = False
-    # should TurtleBot stay still until B0 is pressed (e.g. while the person is brewing coffee)?
-    cannot_move_until_b0_pressed = False
-    # fake data
-    data = False
     ####### END DEFAULT VALUES ##########
 
     def __init__(self):
         # Initialize ros node
-        rospy.init_node("toktak_test", anonymous=False)
+        rospy.init_node("toktak_prototype", anonymous=False)
 
         # What to do if shut down (e.g. ctrl + C or failure)
         rospy.on_shutdown(self.shutdown)
@@ -51,55 +48,109 @@ class Toktakbot():
             "move_base", MoveBaseAction)
         rospy.loginfo("wait for the action server to come up")
         # allow up to 30 seconds for the action server to come up
-    	self.move_base.wait_for_server(rospy.Duration(30))
+        self.move_base.wait_for_server(rospy.Duration(30))
 
         # Monitor Kobuki's power and charging status.
         # If an event occurs (low battery, charging, not charging etc) call function SensorPowerEventCallback
         rospy.Subscriber("/mobile_base/sensors/core",
                          SensorState, self.SensorPowerEventCallback)
 
-        # To avoid TurtleBot from driving to another pose while someone is making coffee ...
-        # TurtleBot isn't allowed to move until the person presses the B0 button.
-        # To implement this we need to monitor the kobuki button events
-        rospy.Subscriber("/mobile_base/events/button",
-                         ButtonEvent, self.ButtonEventCallback)
-
     def walking(self):
-        if (self.cannot_move_until_b0_pressed):
-            rospy.loginfo("Waiting for button B0 to be pressed.")
-            time.sleep(2)
-            return True
-
+        # Before we deliver the next order... 
+        # How is power looking? If low go recharge first at the docking station.
         if (self.is_need_power()):
             return True
 
-        goal = MoveBaseGoal()
+        # Power is fine so let's see if anyone needs delivery...
+        rospy.loginfo("Anyone need delivery?")
 
-        if (self.data):
+        # We'll send a goal to the robot to tell it to move to a pose that's near the docking station
+        goal = MoveBaseGoal()
+        goal.target_pose.header.frame_id = "map"
+        goal.target_pose.header.stamp = rospy.Time.now()
+
+        # Call the server to see the next pending customer's order
+        data = None
+        result = requests.get(self.SERVER_END_POINT + "/jobs?status=pending&limit=1").json()['result']
+        if result is not None:
+            data = result[0]
+
+        if (data):
+            # If we're at the charging station back up 0.2 meters to avoid collision with dock
             self.exit_from_charging_station()
 
-            goal.target_pose.pose = Pose(
-                Point(-10, 0, 0),
-                Quaternion(0, 0, 0, 0)
-            )
+            # Send api to change job status to running
+            requests.patch(self.SERVER_END_POINT + "/jobs/" + str(data['job_id']), json={'status':'running'})
 
+            goal_start = data['goal'][0]
+            goal_destination = data['goal'][1]
+
+            # Set start goal pose
+            goal.target_pose.pose.position.x = goal_start['position']['x']
+            goal.target_pose.pose.position.y = goal_start['position']['y']
+            goal.target_pose.pose.position.z = goal_start['position']['z']
+            goal.target_pose.pose.orientation.x = goal_start['orientation']['x']
+            goal.target_pose.pose.orientation.y = goal_start['orientation']['y']
+            goal.target_pose.pose.orientation.z = goal_start['orientation']['z']
+            goal.target_pose.pose.orientation.w = goal_start['orientation']['w']
+
+            rospy.loginfo("Going to first goal")
             self.move_base.send_goal(goal)
 
             success = self.move_base.wait_for_result(rospy.Duration(60))
 
-            if not success:
-			    # failed to reach goal (e.g. TurtleBot can't find a way to go to the location)
-        	    self.move_base.cancel_goal()
-        	    rospy.loginfo("The base failed to reach the desired pose")
+            if success:
+                requests.patch(self.SERVER_END_POINT + "/goals/" + str(goal_start['goal_id']), json={'status':'arrived'})
+                while True:
+                    rospy.loginfo(
+                        "Hooray, reached the desired pose! Waiting for user confirm to continue.")
+                    status = requests.get(self.SERVER_END_POINT + "/jobs/" + str(data['job_id'])).json()['result'][0]['goal'][0]['status']
+                    if status == "success":
+                        break
+                    time.sleep(5)
             else:
-			    state = self.move_base.get_state()
-                # if state == GoalStatus.SUCCEEDED:
-                #     rospy.loginfo("Hooray, reached the desired pose!  Press B0 to allow TurtleBot to continue.")
-                #     # tell TurtleBot not to move until the customer presses B0
-                #     self.cannot_move_until_b0_is_pressed = True
+                # failed to reach goal (e.g. ToktakBot can't find a way to go to the location)
+                self.move_base.cancel_goal()
+                rospy.loginfo("The base failed to reach the desired pose")
+                requests.patch(self.SERVER_END_POINT + "/jobs/" + str(data['job_id']), json={'status':'failed'})
+                requests.patch(self.SERVER_END_POINT + "/goals/" + str(goal_start['goal_id']), json={'status':'failed'})
+                return True
+            
+            # Set destination goal pose
+            goal.target_pose.pose.position.x = goal_destination['position']['x']
+            goal.target_pose.pose.position.y = goal_destination['position']['y']
+            goal.target_pose.pose.position.z = goal_destination['position']['z']
+            goal.target_pose.pose.orientation.x = goal_destination['orientation']['x']
+            goal.target_pose.pose.orientation.y = goal_destination['orientation']['y']
+            goal.target_pose.pose.orientation.z = goal_destination['orientation']['z']
+            goal.target_pose.pose.orientation.w = goal_destination['orientation']['w']
 
+            rospy.loginfo("Going to destination goal")
+            self.move_base.send_goal(goal)
+
+            success = self.move_base.wait_for_result(rospy.Duration(60))
+
+            if success:
+                requests.patch(self.SERVER_END_POINT + "/goals/" + str(goal_start['goal_id']), json={'status':'arrived'})
+                while True:
+                    rospy.loginfo(
+                        "Hooray, reached the desired pose! Waiting for user confirm to continue.")
+                    status = requests.get(self.SERVER_END_POINT + "/jobs/" + str(data['job_id'])).json()['result'][0]['goal'][1]['status']
+                    if status == "success":
+                        requests.patch(self.SERVER_END_POINT + "/jobs/" + str(data['job_id']), json={'status':'success'})
+                        break
+                    time.sleep(5)
+            else:
+                # failed to reach goal (e.g. ToktakBot can't find a way to go to the location)
+                self.move_base.cancel_goal()
+                rospy.loginfo("The base failed to reach the desired pose")
+                requests.patch(self.SERVER_END_POINT + "/jobs/" + str(data['job_id']), json={'status':'failed'})
+                requests.patch(self.SERVER_END_POINT + "/goals/" + str(goal_destination['goal_id']), json={'status':'failed'})
+                return True
         else:
             if (not self.is_charging):
+                rospy.loginfo(
+                    "Battery is fine but considering no one wants delivery ... Going to docking station.")
                 self.dock_with_charging_station()
             else:
                 time.sleep(2)
@@ -114,6 +165,7 @@ class Toktakbot():
                 "I'm charging and will continue when I'm sufficiently charged")
             time.sleep(30)
             return True
+
         # Are we not currently charging and is either battery low?
         # If yes, go to docking station.
         if (not self.is_charging and self.is_battery_low):
@@ -123,26 +175,36 @@ class Toktakbot():
         return False
 
     def exit_from_charging_station(self):
+        # If you set a goal while it's docked it tends to run into the docking station while turning.
+        # Tell it to back up a little before initiliazing goals.
         if (self.is_charging):
-            rospy.loginfo("We're at the docking station")
+            rospy.loginfo("We're exit from the docking station")
             cmd_vel = rospy.Publisher(
                 "/mobile_base/commands/velocity", Twist, queue_size=10)
+            # Twist is a datatype for velocity
             move_cmd = Twist()
+            # let's go backward at 0.1 m/s
             move_cmd.linear.x = -0.1
+            # let's turn at 0 radians/s
             move_cmd.angular.z = 0
 
             r = rospy.Rate(10)
+            # As long as you haven't ctrl + c keeping doing...
             temp_count = 0
+            # Go backward at 0.1 m/s for 2 seconds
             while (not rospy.is_shutdown() and temp_count < 50):
+                # Publish the velocity
                 cmd_vel.publish(move_cmd)
+                # Wait for 0.1 seconds (10 HZ) and publish again
                 temp_count = temp_count + 1
                 r.sleep()
+            # Make sure ToktakBot stops by sending a default Twist()
             cmd_vel.publish(Twist())
             return True
 
     def dock_with_charging_station(self):
         # Before we can run auto-docking we need to be close to the docking station..
-        if (not self.go_to_charging_station()):
+        if (not self.go_close_to_charging_station()):
             return False
 
         # We're close to the docking station... so let's dock
@@ -169,8 +231,33 @@ class Toktakbot():
             rospy.loginfo("auto_docking failed")
             return False
 
-    def go_to_charging_station(self):
-        return True
+    def go_close_to_charging_station(self):
+        # the auto docking script works well as long as you are roughly 1 meter from the docking station.
+        # So let's get close first...
+        rospy.loginfo("Let's go near the docking station")
+
+        goal = MoveBaseGoal()
+        goal.target_pose.header.frame_id = 'map'
+        goal.target_pose.header.stamp = rospy.Time.now()
+
+        # set a Pose near the docking station
+        goal.target_pose.pose.position.x = self.NEAR_DOCKING_STATION_X
+        goal.target_pose.pose.position.y = self.NEAR_DOCKING_STATION_Y
+        goal.target_pose.pose.orientation.z = 0
+        goal.target_pose.pose.orientation.w = 1
+
+        self.move_base.send_goal(goal)
+
+        success = self.move_base.wait_for_result(rospy.Duration(60))
+
+        if success:
+            rospy.loginfo("Hooray, reached the desired pose near the charging station")
+            return True
+        else:
+            # failed to reach goal (e.g. TurtleBot can't find a way to go to the location)
+            self.move_base.cancel_goal()
+            rospy.loginfo("The base failed to reach the desired pose near the charging station")
+            return False
 
     def SensorPowerEventCallback(self, msg):
         # kobuki's batttery value tends to bounce up and down 1 constantly so only report if difference greater than 1
@@ -201,13 +288,6 @@ class Toktakbot():
                 rospy.loginfo("Kobuki battery is fine")
             self.is_battery_low = False
 
-    def ButtonEventCallback(self, msg):
-        if (msg.button == ButtonEvent.Button0):
-            self.cannot_move_until_b0_pressed = False
-
-        if (msg.button == ButtonEvent.Button2):
-            self.data = True
-
     def shutdown(self):
         rospy.loginfo("Stop")
 
@@ -216,6 +296,7 @@ if __name__ == '__main__':
     delivery_checks = 0
     try:
         toktakbot = Toktakbot()
+        # Keep checking for deliver until we shutdown the script with ctrl + c
         while (toktakbot.walking() and not rospy.is_shutdown()):
             delivery_checks = delivery_checks + 1
     except rospy.ROSInterruptException:

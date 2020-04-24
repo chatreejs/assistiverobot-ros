@@ -1,3 +1,0 @@
-<launch>
-    <node pkg="toktak_apps" name="toktakbot" type="toktakAPI.py" output="screen"></node>
-</launch>
