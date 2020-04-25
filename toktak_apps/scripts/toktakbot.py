@@ -97,7 +97,7 @@ class Toktakbot():
             rospy.loginfo("Going to first goal")
             self.move_base.send_goal(goal)
 
-            success = self.move_base.wait_for_result(rospy.Duration(60))
+            success = self.move_base.wait_for_result(rospy.Duration(180))
 
             if success:
                 requests.patch(self.SERVER_END_POINT + "/goals/" + str(goal_start['goal_id']), json={'status':'arrived'})
@@ -128,10 +128,10 @@ class Toktakbot():
             rospy.loginfo("Going to destination goal")
             self.move_base.send_goal(goal)
 
-            success = self.move_base.wait_for_result(rospy.Duration(60))
+            success = self.move_base.wait_for_result(rospy.Duration(180))
 
             if success:
-                requests.patch(self.SERVER_END_POINT + "/goals/" + str(goal_start['goal_id']), json={'status':'arrived'})
+                requests.patch(self.SERVER_END_POINT + "/goals/" + str(goal_destination['goal_id']), json={'status':'arrived'})
                 while True:
                     rospy.loginfo(
                         "Hooray, reached the desired pose! Waiting for user confirm to continue.")
