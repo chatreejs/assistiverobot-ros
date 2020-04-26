@@ -107,6 +107,7 @@ $ git clone https://github.com/yujinrobot/kobuki.git
 ```
 Checkout to branch melodic to use kobuki package in ros-melodic:
 ```bash
+$ cd ~/kobuki_ws/src/kobuki
 $ git checkout melodic
 ```
 
