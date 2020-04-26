@@ -115,7 +115,7 @@ $ git checkout melodic
 Install kobuki package dependencies for melodic distro:
 ```bash
 $ cd ~/kobuki_ws
-$ rosdep install —from-paths src -i -y -r
+$ rosdep install -r -y --from-paths src --ignore-src
 ```
 
 ### 4. Build package
