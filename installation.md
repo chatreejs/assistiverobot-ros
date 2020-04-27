@@ -149,7 +149,7 @@ Reinsert the Kobuki's USB cable into your laptop/pc/... You should now find it s
 ## Navigation Stack Package Installation
 ### 1. Install Navigation Stack Package
 ```bash
-$ sudo apt-get install ros-melodic-navigation-tutorials 
+$ sudo apt-get install ros-melodic-navigation-tutorials ros-melodic-navigation
 ```
 
 ### 2. Install DWA Local Planner
