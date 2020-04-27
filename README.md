@@ -71,7 +71,12 @@ $ roslaunch toktak_slam toktak_gmapping.launch gazebo:=false
 ```
 
 ### Application
-*In progress*
+ 
+To start assitive robot delivery demo1 cancel all launch (e.g. `toktak_node`) and launch the **toktak_demo1.launch** with out `toktak_node` because this launch file already includes `toktak_node`.
+
+```bash
+$ roslaunch toktak_apps toktak_demo1.launch
+```
 
 ## Simulation robot
 
