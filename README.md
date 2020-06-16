@@ -1,5 +1,6 @@
 # An Assistive Robot for Convenient Delivery in Indoor Environment
-[![Build Status](https://travis-ci.com/Chanonsersa/assistive-robot-delivery.svg?branch=master)](https://travis-ci.com/Chanonsersa/assistive-robot-delivery) [![ROS Distro](https://img.shields.io/badge/ROS-melodic-brightgreen)](https://img.shields.io/badge/ROS-melodic-brightgreen)
+[![Build Status](https://img.shields.io/gitlab/pipeline/assistiverobot/assistiverobot.ros)](https://img.shields.io/gitlab/pipeline/assistiverobot/assistiverobot.ros) 
+[![ROS Distro](https://img.shields.io/badge/ROS-melodic-brightgreen)](https://img.shields.io/badge/ROS-melodic-brightgreen)
 
 This is the code repository for ROS Robotics using [Kobuki](http://kobuki.yujinrobot.com/about2/) and [RPLIDAR A1](http://www.slamtec.com/en/lidar/a1) to make a delivery robot using slam and navigation, published by Chanon Treemeth and Jirawat Promsee.
 
