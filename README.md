@@ -174,7 +174,7 @@ $ sudo apt-get install ros-<DISTRO>-dwa-local-planner
 
 ## Contributors
 
-<a href="https://github.com/Chanonsersa"><img src="https://avatars0.githubusercontent.com/u/36321701?s=460&v=4" title="Chanonsersa" width="50" height="50"></a> <a href="https://github.com/tarrelateto1"><img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="50" height="50"></a>
+<a href="https://github.com/chatreejs"><img src="https://secure.gravatar.com/avatar/8ebfbbad731d04f7c676aa5f36b661c4?s=800&d=identicon" title="chatreejs" width="50" height="50"></a> <a href="https://github.com/tarrelateto1"><img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="50" height="50"></a>
 
 ## License
 
