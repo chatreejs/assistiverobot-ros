@@ -8,7 +8,7 @@
 
   <maintainer email="chanon.sloth@g.swu.ac.th">Chanon Treemeth</maintainer>
 
-  <license>TODO</license>
+  <license>BSD</license>
 
   <buildtool_depend>catkin</buildtool_depend>
 
