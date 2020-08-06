@@ -60,7 +60,7 @@ $ roslaunch toktak_node minimal.launch --screen
 To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
 
 ```bash
-$ roslaunch kobuki_keyop keyop.launch
+$ roslaunch toktak_keyop keyop.launch
 ```
 
 ### Running OpenSLAM GMapping
@@ -95,7 +95,7 @@ if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_
 To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
 
 ```bash
-$ roslaunch kobuki_keyop keyop.launch
+$ roslaunch toktak_keyop keyop.launch
 ```
 
 ### Running OpenSLAM GMapping
