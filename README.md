@@ -1,17 +1,18 @@
 # An Assistive Robot for Convenient Delivery in Indoor Environment
-[![Build Status](https://img.shields.io/gitlab/pipeline/assistiverobot/assistiverobot.ros?style=flat-square)](https://gitlab.com/assistiverobot/assistiverobot.ros/-/pipelines) 
+
+[![Build Status](https://img.shields.io/gitlab/pipeline/assistiverobot/assistiverobot.ros?style=flat-square)](https://gitlab.com/assistiverobot/assistiverobot.ros/-/pipelines)
 [![ROS Distro](https://img.shields.io/badge/ROS-melodic-brightgreen?style=flat-square)](https://img.shields.io/badge/ROS-melodic-brightgreen)
 
 This is the code repository for ROS Robotics using [Kobuki](http://kobuki.yujinrobot.com/about2/) and [RPLIDAR A1](http://www.slamtec.com/en/lidar/a1) to make a delivery robot using slam and navigation, published by Chanon Treemeth and Jirawat Promsee.
 
 ## Prerequisites
 
-* [ROS](https://www.ros.org/install/)
-* [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
-* [Kobuki Package](http://wiki.ros.org/kobuki)
-* [Navigation Package](http://wiki.ros.org/navigation)
-* [Open SLAM Package](http://wiki.ros.org/openslam_gmapping)
-* [RPLIDAR Package]()
+- [ROS](https://www.ros.org/install/)
+- [Catkin Workspace](http://wiki.ros.org/catkin/workspaces)
+- [Kobuki Package](http://wiki.ros.org/kobuki)
+- [Navigation Package](http://wiki.ros.org/navigation)
+- [Open SLAM Package](http://wiki.ros.org/openslam_gmapping)
+- [RPLIDAR Package]()
 
 See detailed installation instructions [here](installation.md).
 
@@ -57,7 +58,7 @@ $ roslaunch toktak_node minimal.launch --screen
 
 ### Teleoperation
 
-To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
+To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell**
 
 ```bash
 $ roslaunch kobuki_keyop keyop.launch
@@ -72,7 +73,7 @@ $ roslaunch toktak_slam toktak_gmapping.launch gazebo:=false
 ```
 
 ### Application
- 
+
 To start assitive robot delivery demo1 cancel all launch (e.g. `toktak_node`) and launch the **toktak_demo1.launch** with out `toktak_node` because this launch file already includes `toktak_node`.
 
 ```bash
@@ -88,11 +89,12 @@ Launch the `gazebo simulation` and **spawn** the robot in an **empty world** or 
 ```bash
 $ roslaunch toktak_gazebo spawn.launch world:=<WORLD_NAME>
 ```
+
 if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_world` automatically.
 
 ### Teleoperation
 
-To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell** 
+To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell**
 
 ```bash
 $ roslaunch kobuki_keyop keyop.launch
@@ -115,7 +117,9 @@ $ roslaunch toktak_navigation toktak_navigation.launch
 ```
 
 ## Troubleshooting
+
 ### [gazebo-2] process has died , error exit code 255
+
 The most probable cause is that you have the gzclient or gzserver opened. Try with
 
 ```bash
@@ -136,6 +140,7 @@ $ sudo apt-get install ros-<DISTRO>-gmapping
 ```
 
 ### CMake Error could not find a package configuration file provided by "openslam_gmapping"
+
 If you see error like
 
 ```
@@ -151,6 +156,7 @@ CMake Error at /opt/ros/melodic/share/catkin/cmake/catkinConfig.cmake:83 (find_p
   files.  If "openslam_gmapping" provides a separate development package or
   SDK, be sure it has been installed.
 ```
+
 It seems like openslam_gmapping is missing. Try
 
 ```bash
@@ -162,7 +168,7 @@ $ sudo apt-get install ros-<DISTRO>-openslam-gmapping
 It seems like navigation package is missing. Try
 
 ```bash
-$ sudo apt-get install ros-<DISTRO>-navigation-tutorials 
+$ sudo apt-get install ros-<DISTRO>-navigation-tutorials
 ```
 
 ### Failed to create the dwa_local_planner/DWAPlannerROS planner
@@ -175,7 +181,12 @@ $ sudo apt-get install ros-<DISTRO>-dwa-local-planner
 
 ## Contributors
 
-<a href="https://github.com/chatreejs"><img src="https://secure.gravatar.com/avatar/8ebfbbad731d04f7c676aa5f36b661c4?s=800&d=identicon" title="chatreejs" width="50" height="50"></a> <a href="https://github.com/tarrelateto1"><img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="50" height="50"></a>
+<a href="https://gitlab.com/chatreejs" style="margin-right: .25em">
+  <img src="https://gitlab.com/uploads/-/system/user/avatar/5542080/avatar.png?width=400" title="chatreejs" width="50" height="50">
+</a>
+<a href="https://github.com/tarrelateto1">
+  <img src="https://avatars1.githubusercontent.com/u/47720165?s=460&v=4" title="tarrelateto1" width="50" height="50">
+</a>
 
 ## License
 
