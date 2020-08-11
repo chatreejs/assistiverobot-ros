@@ -11,11 +11,15 @@ before_script:
 
 catkin_make:
   stage: build
+  only:
+    - master
   script:
     - catkin_make
 
 catkin build:
   stage: build
+  only:
+    - master
   script:
     - catkin build --summarize --no-status --force-color
   artifacts:
@@ -26,6 +30,8 @@ catkin build:
 
 catkin lint:
   stage: test
+  only:
+    - master
   image: ros:melodic-ros-core
   needs: []
   script:
@@ -33,6 +39,8 @@ catkin lint:
 
 catkin_make tests:
   stage: test
+  only:
+    - master
   script:
     - catkin_make run_tests
     - catkin_test_results # Check if one of the tests failed!
@@ -40,6 +48,8 @@ catkin_make tests:
 
 catkin run_tests:
   stage: test
+  only:
+    - master
   script:
     - source devel/setup.bash
     - catkin run_tests --no-status --force-color | sed -En '/^-- run_tests.py/,/^-- run_tests.py/p'
