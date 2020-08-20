@@ -29,7 +29,7 @@ Firstly, clone this repository to your catkin workspace.
 
 ```bash
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/Chanonsersa/assistive-robot-delivery.git
+$ git clone https://gitlab.com/assistiverobot/assistiverobot.ros.git
 ```
 
 Build package using `catkin_make`.
