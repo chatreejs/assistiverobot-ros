@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import rospy
+import os
+import math
+import time
 import requests
 
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -8,14 +11,10 @@ import actionlib
 from actionlib_msgs.msg import *
 from geometry_msgs.msg import Twist
 from kobuki_msgs.msg import PowerSystemEvent, AutoDockingAction, AutoDockingGoal, SensorState
-import math
-
-import time
-
 
 class Toktakbot():
     ######## CHANGE THE FOLLOWING VALUES #########
-    SERVER_END_POINT = "http://192.168.31.197:5000/api/v1"
+    SERVER_END_POINT = os.environ['WEB_SERVICE_END_POINT']
     # x coordinate for pose approx 1 meter from docking station
     NEAR_DOCKING_STATION_X = -0.6
     # y coordinate for pose approx 1 meter from docking station

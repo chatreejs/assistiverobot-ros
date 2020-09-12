@@ -30,7 +30,7 @@ Firstly, clone this repository to your catkin workspace.
 
 ```bash
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/Chanonsersa/assistive-robot-delivery.git
+$ git clone https://gitlab.com/assistiverobot/assistiverobot.ros.git
 ```
 
 Build package using `catkin_make`.
@@ -61,7 +61,7 @@ $ roslaunch toktak_node minimal.launch --screen
 To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell**
 
 ```bash
-$ roslaunch kobuki_keyop keyop.launch
+$ roslaunch toktak_keyop keyop.launch
 ```
 
 ### Running OpenSLAM GMapping
@@ -70,6 +70,21 @@ To start `GMapping` launch the **toktak_gmapping.launch** file in a new **Shell*
 
 ```bash
 $ roslaunch toktak_slam toktak_gmapping.launch gazebo:=false
+```
+
+To save map from slam launch the **map_saver** in a new **Shell**
+
+```bash
+$ roscd toktak_navigation/maps
+$ rosrun map_server map_saver -f ./<MAP_NAME>
+```
+
+### Running Navigation
+
+To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
+
+```bash
+$ roslaunch toktak_navigation toktak_navigation.launch gazebo:=false map_name:=<MAP_NAME>
 ```
 
 ### Application
@@ -97,7 +112,7 @@ if `<WORLD_NAME>` not exists in `toktak_gazebo/world/` it will become an `empty_
 To start `keyboard teleoperation` launch the **keyop.launch** file in a new **Shell**
 
 ```bash
-$ roslaunch kobuki_keyop keyop.launch
+$ roslaunch toktak_keyop keyop.launch
 ```
 
 ### Running OpenSLAM GMapping
@@ -108,12 +123,19 @@ To start `GMapping` launch the **toktak_gazebo_gmapping.launch** file in a new *
 $ roslaunch toktak_slam toktak_gmapping.launch
 ```
 
+To save map from slam launch the **map_saver** in a new **Shell**
+
+```bash
+$ roscd toktak_navigation/maps
+$ rosrun map_server map_saver -f ./<MAP_NAME>
+```
+
 ### Running Navigation
 
 To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
 
 ```bash
-$ roslaunch toktak_navigation toktak_navigation.launch
+$ roslaunch toktak_navigation toktak_navigation.launch map_name:=<MAP_NAME>
 ```
 
 ## Troubleshooting
