@@ -71,6 +71,21 @@ To start `GMapping` launch the **toktak_gmapping.launch** file in a new **Shell*
 $ roslaunch toktak_slam toktak_gmapping.launch gazebo:=false
 ```
 
+To save map from slam launch the **map_saver** in a new **Shell**
+
+```bash
+$ roscd toktak_navigation/maps
+$ rosrun map_server map_saver -f ./<MAP_NAME>
+```
+
+### Running Navigation
+
+To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
+
+```bash
+$ roslaunch toktak_navigation toktak_navigation.launch gazebo:=false map_name:=<MAP_NAME>
+```
+
 ### Application
  
 To start assitive robot delivery demo1 cancel all launch (e.g. `toktak_node`) and launch the **toktak_demo1.launch** with out `toktak_node` because this launch file already includes `toktak_node`.
@@ -106,12 +121,19 @@ To start `GMapping` launch the **toktak_gazebo_gmapping.launch** file in a new *
 $ roslaunch toktak_slam toktak_gmapping.launch
 ```
 
+To save map from slam launch the **map_saver** in a new **Shell**
+
+```bash
+$ roscd toktak_navigation/maps
+$ rosrun map_server map_saver -f ./<MAP_NAME>
+```
+
 ### Running Navigation
 
 To start `navigation` launch the **toktak_navigation.launch** file in a new **Shell**
 
 ```bash
-$ roslaunch toktak_navigation toktak_navigation.launch
+$ roslaunch toktak_navigation toktak_navigation.launch map_name:=<MAP_NAME>
 ```
 
 ## Troubleshooting
