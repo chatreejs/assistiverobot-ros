@@ -9,7 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 catkin_package(
-    INCLUDE_DIRS include
     LIBRARIES kobuki_ros kobuki_nodelet
     CATKIN_DEPENDS 
     rospy roscpp nodelet pluginlib tf angles

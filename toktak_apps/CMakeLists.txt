@@ -11,7 +11,6 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 catkin_package(
-  INCLUDE_DIRS include
   LIBRARIES toktak_apps
   CATKIN_DEPENDS
   geometry_msgs
