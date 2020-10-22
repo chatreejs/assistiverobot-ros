@@ -103,7 +103,7 @@ class Toktakbot():
                 while True:
                     rospy.loginfo(
                         "Hooray, reached the desired pose! Waiting for user confirm to continue.")
-                    status = requests.get(self.SERVER_END_POINT + "/jobs/" + str(data['job_id'])).json()['result'][0]['goal'][0]['status']
+                    status = requests.get(self.SERVER_END_POINT + "/jobs/" + str(data['job_id'])).json()['result']['goal'][0]['status']
                     if status == "success":
                         break
                     time.sleep(5)
@@ -134,7 +134,7 @@ class Toktakbot():
                 while True:
                     rospy.loginfo(
                         "Hooray, reached the desired pose! Waiting for user confirm to continue.")
-                    status = requests.get(self.SERVER_END_POINT + "/jobs/" + str(data['job_id'])).json()['result'][0]['goal'][1]['status']
+                    status = requests.get(self.SERVER_END_POINT + "/jobs/" + str(data['job_id'])).json()['result']['goal'][1]['status']
                     if status == "success":
                         requests.patch(self.SERVER_END_POINT + "/jobs/" + str(data['job_id']), json={'status':'success'})
                         break
