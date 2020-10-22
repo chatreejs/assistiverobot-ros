@@ -9,6 +9,7 @@
     <include file="$(find toktak_navigation)/launch/toktak_navigation.launch">
         <arg name="gazebo" value="false"/>
         <arg name="open_rviz" value="false"/>
+        <arg name="map_name" default="map" />
     </include>
 
     <node pkg="toktak_apps" name="toktakbot" type="toktakbot.py" output="screen"></node>
